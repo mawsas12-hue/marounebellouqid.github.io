@@ -1,110 +1,391 @@
-
-But we might want a border color.
-
-Alternatively, we can use same style as .social-icon but with background and border.
-
-We'll implement.
-
-Also we might want to ensure accessibility.
-
-We'll add `<a href="https://tiktok.com/..." class="social-circle-link" aria-label="TikTok">` etc.
-
-Now produce final code.
-
-</think>**كود الصفحة مع 4 أيقونات في دائرة أسفل الوصف**
-
-```html
 <!DOCTYPE html>
 <html lang="en" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MAROUNE – Portfolio</title>
 
   <style>
     /*----- المتغيرات -----*/
     :root {
-      --c-bg:#0a0a0a;
-      --c-primary:#ff4757;
-      --c-primary-l:#ff6b81;
-      --c-text:#fff;
-      --c-muted:#999;
-      --c-link:#888;
-      --c-link-h:var(--c-text);
-      --c-border:rgba(255,255,255,.2);
-      --c-border-h:var(--c-primary);
-      --gap:60px;
-      --radius:30px;
-      --tr:.3s ease;
-      --maxw:1200px;
+      --c-bg: #0a0a0a;
+      --c-primary: #ff4757;
+      --c-primary-l: #ff6b81;
+      --c-text: #fff;
+      --c-muted: #999;
+      --c-link: #888;
+      --c-link-h: var(--c-text);
+      --c-border: rgba(255, 255, 255, 0.2);
+      --c-border-h: var(--c-primary);
+      --gap: 60px;
+      --radius: 30px;
+      --tr: 0.3s ease;
+      --maxw: 1200px;
     }
 
     /*----- الأساس -----*/
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:sans-serif;background:var(--c-bg);color:var(--c-text);overflow-x:hidden;scroll-behavior:smooth;}
-    a{color:var(--c-link);text-decoration:none;transition:color var(--tr);}
-    a:hover,a:focus-visible{color:var(--c-link-h);}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: var(--c-bg);
+      color: var(--c-text);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: var(--c-link);
+      text-decoration: none;
+      transition: color var(--tr);
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--c-link-h);
+    }
 
     /*----- زر القفز -----*/
-    .skip{position:absolute;top:-40px;left:20px;background:var(--c-primary);color:var(--c-bg);padding:.5rem 1rem;border-radius:var(--radius);z-index:999;transition:top var(--tr);}
-    .skip:focus{top:20px;}
+    .skip {
+      position: absolute;
+      top: -40px;
+      left: 20px;
+      background: var(--c-primary);
+      color: var(--c-bg);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      z-index: 999;
+      transition: top var(--tr);
+    }
+
+    .skip:focus {
+      top: 20px;
+    }
 
     /*----- هيدر -----*/
-    header{position:fixed;top:0;left:0;right:0;background:rgba(10,10,10,.95);backdrop-filter:blur(10px);z-index:1000;padding:20px var(--gap);display:flex;align-items:center;justify-content:space-between;}
-    .logo{font-size:1.5rem;font-weight:700;color:var(--c-primary);letter-spacing:1px;}
-    nav ul{list-style:none;display:flex;gap:35px;margin:0;padding:0;}
-    nav li a{font-weight:500;position:relative;}
-    nav li a::after{content:"";position:absolute;bottom:-5px;left:0;right:0;height:2px;background:var(--c-primary);transform:scaleX(0);transform-origin:right;transition:transform var(--tr);}
-    nav li a:hover::after,nav li a.active::after{transform:scaleX(1);transform-origin:left;}
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 20px var(--gap);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-    /*----- الموبايل -----*/
-    .menu{display:none;flex-direction:column;gap:5px;cursor:pointer;}
-    .menu span{width:25px;height:3px;background:var(--c-text);transition:var(--tr);}
-    @media(max-width:768px){
-      .menu{display:flex;}
-      nav ul{position:fixed;top:70px;right:-260px;flex-direction:column;background:rgba(10,10,10,.98);padding:40px;width:250px;height:calc(100vh-70px);gap:25px;transition:right var(--tr);border-left:1px solid rgba(255,255,255,.05);}
-      nav ul.active{right:0;}
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--c-primary);
+      letter-spacing: 1px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 35px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav li a {
+      font-weight: 500;
+      position: relative;
+    }
+
+    nav li a::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--c-primary);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform var(--tr);
+    }
+
+    nav li a:hover::after,
+    nav li a.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /*----- قائمة الهاتف -----*/
+    .menu {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .menu span {
+      width: 25px;
+      height: 3px;
+      background: var(--c-text);
+      transition: var(--tr);
+    }
+
+    @media (max-width: 768px) {
+      .menu {
+        display: flex;
+      }
+
+      nav ul {
+        position: fixed;
+        top: 70px;
+        right: -260px;
+        flex-direction: column;
+        background: rgba(10, 10, 10, 0.98);
+        padding: 40px;
+        width: 250px;
+        height: calc(100vh - 70px);
+        gap: 25px;
+        transition: right var(--tr);
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      nav ul.active {
+        right: 0;
+      }
     }
 
     /*----- المحتوى الرئيسي -----*/
-    main{display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:calc(120px+var(--gap)) var(--gap) var(--gap);max-width:var(--maxw);margin:0 auto;gap:80px;}
-    @media(max-width:1024px){main{flex-direction:column;text-align:center;}}
-    .profile{flex:1;}
-    .profile-circle{position:relative;width:450px;height:450px;margin:0 auto;animation:float 3s ease-in-out infinite;}
-    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
-    .circle-bg{position:absolute;inset:0;margin:auto;width:100%;height:100%;background:radial-gradient(circle,#d63031 0,#8b1a1a 100%);border-radius:50%;animation:pulse 3s ease-in-out infinite;}
-    @keyframes pulse{0%,100%{transform:scale(1);opacity:.9;}50%{transform:scale(1.05);opacity:1;}}
-    .profile-circle img{width:100%;height:100%;border-radius:50%;object-fit:cover;z-index:2;filter:grayscale(10%);}
-    .profile-desc{margin-top:20px;color:var(--c-muted);font-size:1rem;line-height:1.6;text-align:center;}
+    main {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: calc(120px + var(--gap)) var(--gap) var(--gap);
+      max-width: var(--maxw);
+      margin: 0 auto;
+      gap: 80px;
+    }
 
-    .content{flex:1;max-width:600px;}
-    .content h1{font-size:4rem;font-weight:300;margin-bottom:.5rem;}
-    .content h1 span{color:var(--c-primary);font-weight:700;}
-    .content h2{font-size:2rem;font-weight:400;color:var(--c-muted);margin-bottom:1.5rem;}
-    .content h2 span{color:#d63031;}
-    .description{font-size:1rem;line-height:1.8;color:var(--c-muted);margin-bottom:2rem;}
+    @media (max-width: 1024px) {
+      main {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .profile {
+      flex: 1;
+    }
+
+    .profile-circle {
+      position: relative;
+      width: 450px;
+      height: 450px;
+      margin: 0 auto;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @media (max-width: 768px) {
+      .profile-circle {
+        width: 300px;
+        height: 300px;
+      }
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .circle-bg {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #d63031 0, #8b1a1a 100%);
+      border-radius: 50%;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 1;
+      }
+    }
+
+    .profile-circle img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      z-index: 2;
+      filter: grayscale(10%);
+    }
+
+    .profile-desc {
+      margin-top: 20px;
+      color: var(--c-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .content {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .content h1 {
+      font-size: 4rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .content h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    .content h1 span {
+      color: var(--c-primary);
+      font-weight: 700;
+    }
+
+    .content h2 {
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--c-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .content h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .content h2 span {
+      color: #d63031;
+    }
+
+    .description {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--c-muted);
+      margin-bottom: 2rem;
+    }
 
     /*----- الأيقونات الاجتماعية -----*/
-    .social-icons{display:flex;gap:15px;justify-content:center;margin-bottom:2rem;}
-    .social-icon{width:50px;height:50px;border-radius:50%;border:2px solid var(--c-border);background:transparent;display:flex;align-items:center;justify-content:center;transition:var(--tr);}
-    .social-icon:hover,.social-icon:focus-visible{background:var(--c-primary);border-color:var(--c-primary);transform:translateY(-5px);}
-    .social-icon svg{fill:var(--c-text);width:20px;height:20px;}
+    .social-circle-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
 
-    /*----- الأيقونات في دائرة أسفل الوصف -----*/
-    .social-circle-container{display:flex;gap:20px;justify-content:center;margin-bottom:30px;}
-    .social-circle-link{width:60px;height:60px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;transition:var(--tr);}
-    .social-circle-link svg{width:32px;height:32px;}
-    .social-circle-link:hover{transform:scale(1.1);box-shadow:0 4px 8px rgba(0,0,0,.2);}
+    .social-circle-link {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--tr);
+      border: 2px solid var(--c-border);
+    }
+
+    @media (max-width: 768px) {
+      .social-circle-link {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .social-circle-link svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .social-circle-link[aria-label="WhatsApp"] svg {
+      fill: #25D366;
+    }
+
+    .social-circle-link:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
     /*----- زر "Hire me" -----*/
-    .hire-btn{display:inline-block;padding:15px 45px;border:2px solid var(--c-primary);border-radius:var(--radius);color:var(--c-text);font-weight:600;transition:var(--tr);}
-    .hire-btn:hover,.hire-btn:focus-visible{background:var(--c-primary);transform:translateY(-3px);box-shadow:0 10px 30px rgba(255,71,87,.3);}
+    .hire-btn {
+      display: inline-block;
+      padding: 15px 45px;
+      border: 2px solid var(--c-primary);
+      border-radius: var(--radius);
+      color: var(--c-text);
+      font-weight: 600;
+      transition: var(--tr);
+    }
+
+    @media (max-width: 768px) {
+      .hire-btn {
+        padding: 12px 35px;
+        font-size: 0.9rem;
+      }
+    }
+
+    .hire-btn:hover,
+    .hire-btn:focus-visible {
+      background: var(--c-primary);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+    }
 
     /*----- تفعيل الوضع الداكن -----*/
-    .theme{position:fixed;bottom:20px;right:20px;background:var(--c-primary);color:var(--c-bg);border:none;width:50px;height:50px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:background var(--tr);z-index:999;}
-    .theme:hover{background:var(--c-primary-l);}
+    .theme {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--c-primary);
+      color: var(--c-bg);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--tr);
+      z-index: 999;
+    }
+
+    .theme:hover {
+      background: var(--c-primary-l);
+    }
   </style>
 </head>
+
 <body>
   <!-- زر تخطي المحتوى -->
   <a href="#main" class="skip">Skip to content</a>
@@ -122,59 +403,62 @@ Now produce final code.
         <li><a href="#contact">Contact</a></li>
       </ul>
       <div class="menu" id="menuToggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </nav>
   </header>
 
   <!-- Main content -->
   <main id="main">
-    <!-- Profile picture -->
-    <section class="profile">
-      <div class="profile-circle">
-        <div class="circle-bg"></div>
-        <img src="profile.jpg" alt="MAROUNE" loading="lazy">
-      </div>
-      <p class="profile-desc">
-        Hi, I’m MAROUNE.<br>
-        I turn ideas into engaging digital experiences. Through thoughtful design and clean interfaces, I create websites that feel simple, look powerful, and connect brands with people in a meaningful way.
-      </p>
-    </section>
-
     <!-- Text content -->
     <section class="content">
       <h1>Hi, It’s <span>MAROUNE</span></h1>
       <h2>I’m a <span>Web Designer</span></h2>
 
-      <p class="description">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus labore dolores esse. Odit similique doloribus tenetur doloremque, sunt commodi in ipso repudiandae debitis delenitii blanditiis quibusdam quaerat neque asperiores ea.
+      <p class="profile-desc">
+        Hi, I’m MAROUNE.<br />
+        I turn ideas into engaging digital experiences. Through thoughtful design and clean interfaces, I create websites that feel simple, look powerful, and connect brands with people in a meaningful way.
       </p>
 
       <!-- الدوائر بأيقونات الشبكات -->
       <div class="social-circle-container">
-        <a href="https://tiktok.com" target="_blank" class="social-circle-link" aria-label="TikTok">
+        <a href="https://www.tiktok.com/@marwanskafandry?is_from_webapp=1&sender_device=pc" target="_blank" class="social-circle-link" aria-label="TikTok">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/>
+            <path
+              d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z" />
           </svg>
         </a>
-        <a href="https://facebook.com" target="_blank" class="social-circle-link" aria-label="Facebook">
+        <a href="https://www.facebook.com/share/16rz4RWr9Q/" target="_blank" class="social-circle-link" aria-label="Facebook">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M22.675 0h-21.35C.595 0 0 .595 0 1.326v21.348C0 23.405.595 24 1.326 24h11.49v-9.294H9.691v-3.622h3.124V8.413c0-3.1 1.894-4.788 4.66-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.326-.595 1.326-1.326V1.326C24 .595 23.405 0 22.675 0z"/>
+            <path
+              d="M22.675 0h-21.35C.595 0 0 .595 0 1.326v21.348C0 23.405.595 24 1.326 24h11.49v-9.294H9.691v-3.622h3.124V8.413c0-3.1 1.894-4.788 4.66-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.326-.595 1.326-1.326V1.326C24 .595 23.405 0 22.675 0z" />
           </svg>
         </a>
-        <a href="https://whatsapp.com" target="_blank" class="social-circle-link" aria-label="WhatsApp">
+        <a href="https://wa.me/qr/2APFYEKXX5VOC1" target="_blank" class="social-circle-link" aria-label="WhatsApp">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M22.647 4.151c-1.14-5.14-5.775-5.14-7.35-5.14-6.688 0-12.166 5.478-12.166 12.166 0 2.01.486 3.856 1.325 5.467-2.226-1.002-5.12-2.665-6.31-6.134C-1.33 11.58.51 5.55 5.75 1.19c5.245-4.355 13.46-5.266 18.33-3.213 1.447.548 2.76 1.384 3.842 2.45.423.435 1.104 1.054 1.104 1.054-3.075.337-6.103.52-8.702.52-1.24 0-2.473-.024-3.694-.07.84.58 1.562 1.28 2.145 2.064-1.275-1.006-2.755-1.722-4.393-2.109 1.233-.312 2.451-.47 3.668-.47 9.73 0 14.827 8.04 14.827 14.827 0 1.05-.057 2.08-.174 3.097z"/>
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
           </svg>
         </a>
-        <a href="https://youtube.com" target="_blank" class="social-circle-link" aria-label="YouTube">
+        <a href="https://www.youtube.com/@marounebelloqid" target="_blank" class="social-circle-link" aria-label="YouTube">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M23.5 6.5c-.42-3.01-1.7-4.47-3-5.08-1.29-.61-3.36-1.14-5.92-1.14-2.56 0-4.63.53-5.92 1.14-1.3.61-2.58 2.07-3 5.08-.42 3.02-.42 5.19-.42 5.19s0 2.17.42 5.19c.42 3.01 1.7 4.47 3 5.08 1.29.61 3.36 1.14 5.92 1.14 2.56 0 4.63-.53 5.92-1.14 1.3-.61 2.58-2.07 3-5.08.42-3.02.42-5.19.42-5.19s0-2.17-.42-5.19zM9.75 15.5V8.5L15 12l-5.25 3.5z"/>
+            <path
+              d="M23.5 6.5c-.42-3.01-1.7-4.47-3-5.08-1.29-.61-3.36-1.14-5.92-1.14-2.56 0-4.63.53-5.92 1.14-1.3.61-2.58 2.07-3 5.08-.42 3.02-.42 5.19-.42 5.19s0 2.17.42 5.19c.42 3.01 1.7 4.47 3 5.08 1.29.61 3.36 1.14 5.92 1.14 2.56 0 4.63-.53 5.92-1.14 1.3-.61 2.58-2.07 3-5.08.42-3.02.42-5.19.42-5.19s0-2.17-.42-5.19zM9.75 15.5V8.5L15 12l-5.25 3.5z" />
           </svg>
         </a>
       </div>
 
       <a href="#contact" class="hire-btn">Hire me</a>
+    </section>
+
+    <!-- Profile picture -->
+    <section class="profile">
+      <div class="profile-circle">
+        <div class="circle-bg"></div>
+        <img src="profile.jpg" alt="MAROUNE" loading="lazy" />
+      </div>
     </section>
   </main>
 
@@ -183,32 +467,34 @@ Now produce final code.
 
   <script>
     /*----- Mobile menu -----*/
-    const toggle = document.getElementById('menuToggle');
-    const links = document.getElementById('navLinks');
-    toggle.addEventListener('click', () => links.classList.toggle('active'));
-    links.querySelectorAll('a').forEach(a => a.onclick = () => links.classList.remove('active'));
+    const toggle = document.getElementById("menuToggle");
+    const links = document.getElementById("navLinks");
+    toggle.addEventListener("click", () => links.classList.toggle("active"));
+    links.querySelectorAll("a").forEach((a) => (a.onclick = () => links.classList.remove("active")));
 
     /*----- Smooth scroll -----*/
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener("click", (e) => {
         e.preventDefault();
-        document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth', block:'start'});
+        document.querySelector(a.getAttribute("href")).scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
 
     /*----- Dark mode -----*/
-    const themeBtn = document.getElementById('themeToggle');
-    const setTheme = t => {
-      document.documentElement.setAttribute('data-theme', t);
-      themeBtn.textContent = t === 'dark' ? '☀' : '☾';
-      localStorage.setItem('theme', t);
+    const themeBtn = document.getElementById("themeToggle");
+    const setTheme = (t) => {
+      document.documentElement.setAttribute("data-theme", t);
+      themeBtn.textContent = t === "dark" ? "☀" : "☾";
+      localStorage.setItem("theme", t);
     };
-    const stored = localStorage.getItem('theme');
-    if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) setTheme('dark');
-    else setTheme('light');
+    const stored = localStorage.getItem("theme");
+    if (stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches))
+      setTheme("dark");
+    else setTheme("light");
 
-    themeBtn.onclick = () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    themeBtn.onclick = () =>
+      setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
   </script>
 </body>
 </html>
-```*
+
