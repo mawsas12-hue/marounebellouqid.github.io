@@ -1,500 +1,650 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAROUNE – Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAROUNE | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
 
   <style>
-    /*----- المتغيرات -----*/
     :root {
-      --c-bg: #0a0a0a;
-      --c-primary: #ff4757;
-      --c-primary-l: #ff6b81;
-      --c-text: #fff;
-      --c-muted: #999;
-      --c-link: #888;
-      --c-link-h: var(--c-text);
-      --c-border: rgba(255, 255, 255, 0.2);
-      --c-border-h: var(--c-primary);
-      --gap: 60px;
-      --radius: 30px;
-      --tr: 0.3s ease;
-      --maxw: 1200px;
+      --bg: #080b14;
+      --bg-soft: #12172a;
+      --surface: rgba(17, 24, 39, 0.7);
+      --surface-strong: #161d32;
+      --text: #eef2ff;
+      --muted: #a9b1cc;
+      --primary: #5b8cff;
+      --secondary: #7e5bff;
+      --accent: #28d7b8;
+      --ring: rgba(91, 140, 255, 0.45);
+      --border: rgba(160, 180, 255, 0.22);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --shadow: 0 20px 60px rgba(5, 10, 24, 0.55);
+      --tr: 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      --maxw: 1180px;
     }
 
-    /*----- الأساس -----*/
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root[data-theme="light"] {
+      --bg: #f3f7ff;
+      --bg-soft: #ffffff;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-strong: #ffffff;
+      --text: #1d2538;
+      --muted: #5f6881;
+      --primary: #4668e7;
+      --secondary: #6d49d8;
+      --accent: #0eb39a;
+      --ring: rgba(70, 104, 231, 0.35);
+      --border: rgba(70, 104, 231, 0.24);
+      --shadow: 0 20px 50px rgba(43, 63, 125, 0.2);
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { min-height: 100%; }
 
     body {
-      font-family: sans-serif;
-      background: var(--c-bg);
-      color: var(--c-text);
+      font-family: "Cairo", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 85% 10%, rgba(126, 91, 255, 0.28), transparent 35%),
+        radial-gradient(circle at 5% 25%, rgba(40, 215, 184, 0.16), transparent 30%),
+        linear-gradient(180deg, #080b14 0%, #0c1221 55%, #0a0f1a 100%);
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
-    a {
-      color: var(--c-link);
-      text-decoration: none;
-      transition: color var(--tr);
+    a { color: inherit; text-decoration: none; }
+
+    :root[data-theme="light"] body {
+      background:
+        radial-gradient(circle at 88% 8%, rgba(109, 73, 216, 0.2), transparent 35%),
+        radial-gradient(circle at 8% 24%, rgba(14, 179, 154, 0.16), transparent 32%),
+        linear-gradient(180deg, #f8faff 0%, #edf2ff 55%, #e9efff 100%);
     }
 
-    a:hover,
-    a:focus-visible {
-      color: var(--c-link-h);
-    }
 
-    /*----- زر القفز -----*/
     .skip {
       position: absolute;
-      top: -40px;
-      left: 20px;
-      background: var(--c-primary);
-      color: var(--c-bg);
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius);
-      z-index: 999;
+      inset-inline-start: 18px;
+      top: -48px;
+      z-index: 1000;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 999px;
+      padding: 10px 18px;
       transition: top var(--tr);
     }
+    .skip:focus-visible { top: 18px; }
 
-    .skip:focus {
-      top: 20px;
+    .container { width: min(92%, var(--maxw)); margin-inline: auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(8, 11, 20, 0.7);
     }
 
-    /*----- هيدر -----*/
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(10, 10, 10, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      padding: 20px var(--gap);
+    .nav-wrap {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      min-height: 84px;
     }
 
     .logo {
-      font-size: 1.5rem;
+      font-family: "Poppins", sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: 0.08em;
       font-weight: 700;
-      color: var(--c-primary);
-      letter-spacing: 1px;
+      background: linear-gradient(120deg, #ffffff 15%, #9cb6ff 50%, #8ef0df 95%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     nav ul {
       list-style: none;
       display: flex;
-      gap: 35px;
-      margin: 0;
-      padding: 0;
+      align-items: center;
+      gap: 28px;
     }
 
-    nav li a {
-      font-weight: 500;
+    nav a {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color var(--tr), transform var(--tr);
       position: relative;
+      display: inline-block;
     }
 
-    nav li a::after {
+    nav a::after {
       content: "";
       position: absolute;
-      bottom: -5px;
-      left: 0;
-      right: 0;
+      inset-inline: 0;
+      bottom: -7px;
       height: 2px;
-      background: var(--c-primary);
+      background: linear-gradient(90deg, var(--primary), var(--accent));
       transform: scaleX(0);
       transform-origin: right;
       transition: transform var(--tr);
     }
 
-    nav li a:hover::after,
-    nav li a.active::after {
+    nav a:hover,
+    nav a.active { color: var(--text); transform: translateY(-2px); }
+    nav a:hover::after,
+    nav a.active::after {
       transform: scaleX(1);
       transform-origin: left;
     }
 
-    /*----- قائمة الهاتف -----*/
     .menu {
       display: none;
       flex-direction: column;
       gap: 5px;
       cursor: pointer;
     }
-
     .menu span {
-      width: 25px;
+      width: 24px;
       height: 3px;
-      background: var(--c-text);
-      transition: var(--tr);
+      border-radius: 999px;
+      background: #dde5ff;
     }
 
-    @media (max-width: 768px) {
-      .menu {
-        display: flex;
-      }
-
-      nav ul {
-        position: fixed;
-        top: 70px;
-        right: -260px;
-        flex-direction: column;
-        background: rgba(10, 10, 10, 0.98);
-        padding: 40px;
-        width: 250px;
-        height: calc(100vh - 70px);
-        gap: 25px;
-        transition: right var(--tr);
-        border-left: 1px solid rgba(255, 255, 255, 0.05);
-      }
-
-      nav ul.active {
-        right: 0;
-      }
-    }
-
-    /*----- المحتوى الرئيسي -----*/
     main {
-      display: flex;
-      flex-direction: row;
+      padding: 48px 0 20px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 34px;
       align-items: center;
-      justify-content: space-between;
-      padding: calc(120px + var(--gap)) var(--gap) var(--gap);
-      max-width: var(--maxw);
-      margin: 0 auto;
-      gap: 80px;
     }
 
-    @media (max-width: 1024px) {
-      main {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
-
-    .profile {
-      flex: 1;
-    }
-
-    .profile-circle {
+    .hero-card {
+      background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: clamp(24px, 4vw, 46px);
       position: relative;
-      width: 450px;
-      height: 450px;
-      margin: 0 auto;
-      animation: float 3s ease-in-out infinite;
+      overflow: hidden;
+      isolation: isolate;
     }
 
-    @media (max-width: 768px) {
-      .profile-circle {
-        width: 300px;
-        height: 300px;
-      }
-    }
-
-    @keyframes float {
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-20px);
-      }
-    }
-
-    .circle-bg {
+    .hero-card::before {
+      content: "";
       position: absolute;
       inset: 0;
-      margin: auto;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, #d63031 0, #8b1a1a 100%);
-      border-radius: 50%;
-      animation: pulse 3s ease-in-out infinite;
+      background: radial-gradient(circle at 18% 18%, rgba(91, 140, 255, 0.25), transparent 45%);
+      z-index: -1;
     }
 
-    @keyframes pulse {
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: 0.9;
-      }
-      50% {
-        transform: scale(1.05);
-        opacity: 1;
-      }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(91, 140, 255, 0.14);
+      border: 1px solid rgba(147, 174, 255, 0.33);
+      color: #c9d7ff;
+      padding: 7px 14px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
     }
 
-    .profile-circle img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      z-index: 2;
-      filter: grayscale(10%);
+    h1 {
+      font-family: "Poppins", "Cairo", sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.18;
+      margin-bottom: 14px;
+    }
+
+    h1 span { color: #92bbff; }
+
+    .subtitle {
+      color: #dbe4ff;
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      margin-bottom: 16px;
+      font-weight: 600;
     }
 
     .profile-desc {
-      margin-top: 20px;
-      color: var(--c-muted);
-      font-size: 1rem;
-      line-height: 1.6;
+      color: var(--muted);
+      line-height: 1.95;
+      font-size: 1.02rem;
+      margin-bottom: 26px;
+      max-width: 58ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+      padding: 13px 30px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform var(--tr), box-shadow var(--tr), border-color var(--tr), background var(--tr);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(120deg, var(--primary), var(--secondary));
+      box-shadow: 0 14px 30px rgba(91, 140, 255, 0.28);
+    }
+
+    .btn-secondary {
+      color: #dce7ff;
+      border-color: var(--border);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .btn:hover { transform: translateY(-3px); }
+    .btn-primary:hover { box-shadow: 0 18px 35px rgba(91, 140, 255, 0.35); }
+    .btn-secondary:hover {
+      border-color: rgba(171, 194, 255, 0.62);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .btn:active,
+    .social-circle-link:active,
+    .theme:active { transform: scale(0.97); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(100px, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
       text-align: center;
     }
 
-    .content {
-      flex: 1;
-      max-width: 600px;
+    .stat strong {
+      font-family: "Poppins", sans-serif;
+      font-size: 1.25rem;
+      color: #c9e0ff;
+      display: block;
+    }
+    .stat span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 600;
     }
 
-    .content h1 {
-      font-size: 4rem;
-      font-weight: 300;
-      margin-bottom: 0.5rem;
+    .profile {
+      display: grid;
+      place-items: center;
     }
 
-    @media (max-width: 768px) {
-      .content h1 {
-        font-size: 2.5rem;
-      }
+    .profile-frame {
+      position: relative;
+      width: min(420px, 92vw);
+      aspect-ratio: 1 / 1;
+      border-radius: 36px;
+      padding: 18px;
+      background: linear-gradient(145deg, rgba(91, 140, 255, 0.45), rgba(40, 215, 184, 0.28));
+      box-shadow: var(--shadow);
     }
 
-    .content h1 span {
-      color: var(--c-primary);
-      font-weight: 700;
+    .profile-frame::before,
+    .profile-frame::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(45px);
+      z-index: -1;
     }
 
-    .content h2 {
-      font-size: 2rem;
-      font-weight: 400;
-      color: var(--c-muted);
-      margin-bottom: 1.5rem;
+    .profile-frame::before {
+      width: 170px;
+      height: 170px;
+      background: rgba(126, 91, 255, 0.4);
+      inset-inline-start: -40px;
+      top: -36px;
     }
 
-    @media (max-width: 768px) {
-      .content h2 {
-        font-size: 1.5rem;
-      }
+    .profile-frame::after {
+      width: 200px;
+      height: 200px;
+      background: rgba(40, 215, 184, 0.25);
+      inset-inline-end: -50px;
+      bottom: -35px;
     }
 
-    .content h2 span {
-      color: #d63031;
+    .profile-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.35);
+      position: relative;
     }
 
-    .description {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--c-muted);
-      margin-bottom: 2rem;
+    .profile-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.03);
+      transition: transform var(--tr), filter var(--tr);
+      filter: saturate(1.08) contrast(1.03);
     }
 
-    /*----- الأيقونات الاجتماعية -----*/
+    .profile-frame:hover img {
+      transform: scale(1.08);
+      filter: saturate(1.15);
+    }
+
     .social-circle-container {
       display: flex;
-      gap: 20px;
-      justify-content: center;
-      margin-bottom: 30px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     .social-circle-link {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--tr);
-      border: 2px solid var(--c-border);
+      position: relative;
+      overflow: hidden;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(184, 201, 255, 0.32);
+      background: rgba(255,255,255,0.08);
+      color: #e8edff;
+      transition: transform var(--tr), border-color var(--tr), background var(--tr), box-shadow var(--tr);
     }
 
-    @media (max-width: 768px) {
-      .social-circle-link {
-        width: 50px;
-        height: 50px;
-      }
-    }
-
-    .social-circle-link svg {
-      width: 32px;
-      height: 32px;
-    }
-
-    .social-circle-link[aria-label="WhatsApp"] svg {
-      fill: #25D366;
-    }
-
+    .social-circle-link svg { width: 24px; height: 24px; fill: currentColor; }
     .social-circle-link:hover {
-      transform: scale(1.1);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transform: translateY(-4px);
+      background: linear-gradient(130deg, rgba(91,140,255,0.25), rgba(126,91,255,0.25));
+      border-color: rgba(191, 208, 255, 0.7);
+      box-shadow: 0 14px 24px rgba(30, 54, 128, 0.35);
     }
 
-    /*----- زر "Hire me" -----*/
-    .hire-btn {
-      display: inline-block;
-      padding: 15px 45px;
-      border: 2px solid var(--c-primary);
-      border-radius: var(--radius);
-      color: var(--c-text);
-      font-weight: 600;
-      transition: var(--tr);
+    section.grid-sections {
+      margin-top: 44px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
     }
 
-    @media (max-width: 768px) {
-      .hire-btn {
-        padding: 12px 35px;
-        font-size: 0.9rem;
-      }
+    .mini-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      transition: transform var(--tr), border-color var(--tr);
+      min-height: 120px;
     }
 
-    .hire-btn:hover,
-    .hire-btn:focus-visible {
-      background: var(--c-primary);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+    .mini-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(152, 179, 255, 0.45);
     }
 
-    /*----- تفعيل الوضع الداكن -----*/
+    .mini-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.08rem;
+      color: #dbe6ff;
+    }
+
+    .mini-card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+
     .theme {
       position: fixed;
+      inset-inline-end: 20px;
       bottom: 20px;
-      right: 20px;
-      background: var(--c-primary);
-      color: var(--c-bg);
-      border: none;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: linear-gradient(130deg, var(--primary), var(--secondary));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
       cursor: pointer;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background var(--tr);
-      z-index: 999;
+      transition: transform var(--tr), box-shadow var(--tr);
+      z-index: 40;
     }
 
     .theme:hover {
-      background: var(--c-primary-l);
+      transform: translateY(-4px) rotate(8deg);
+      box-shadow: 0 14px 30px rgba(75, 113, 215, 0.45);
+    }
+
+    .btn-ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 600ms linear;
+      background: rgba(255, 255, 255, 0.42);
+      pointer-events: none;
+    }
+
+    @keyframes ripple {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    .btn:focus-visible,
+    .social-circle-link:focus-visible,
+    .theme:focus-visible,
+    .menu:focus-visible {
+      outline: 2px solid var(--ring);
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .profile { order: -1; }
+      .stats { grid-template-columns: repeat(3, 1fr); }
+      section.grid-sections { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 768px) {
+      .menu { display: flex; }
+
+      nav ul {
+        position: fixed;
+        top: 84px;
+        inset-inline-end: -280px;
+        width: min(80vw, 270px);
+        height: calc(100vh - 84px);
+        background: rgba(10, 14, 25, 0.95);
+        border-inline-start: 1px solid rgba(255,255,255,0.08);
+        padding: 26px;
+        flex-direction: column;
+        align-items: flex-start;
+        transition: inset-inline-end var(--tr);
+      }
+
+      nav ul.active { inset-inline-end: 0; }
+      section.grid-sections { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 
 <body>
-  <!-- زر تخطي المحتوى -->
-  <a href="#main" class="skip">Skip to content</a>
+  <a href="#main" class="skip">تخطي إلى المحتوى</a>
 
-  <!-- Header -->
   <header>
-    <div class="logo">MAROUNE</div>
-    <nav>
-      <ul id="navLinks">
-        <li><a href="#home" class="active">Home</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <div class="menu" id="menuToggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </nav>
+    <div class="container nav-wrap">
+      <div class="logo">MAROUNE</div>
+      <nav>
+        <ul id="navLinks">
+          <li><a href="#home" class="active">الرئيسية</a></li>
+          <li><a href="#services">الخدمات</a></li>
+          <li><a href="#skills">المهارات</a></li>
+          <li><a href="#education">التعليم</a></li>
+          <li><a href="#experience">الخبرات</a></li>
+          <li><a href="#contact">تواصل</a></li>
+        </ul>
+        <button class="menu" id="menuToggle" aria-label="فتح القائمة" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
   </header>
 
-  <!-- Main content -->
-  <main id="main">
-    <!-- Text content -->
-    <section class="content">
-      <h1>Hi, It’s <span>MAROUNE</span></h1>
-      <h2>I’m a <span>Web Designer</span></h2>
+  <main id="main" class="container">
+    <section class="hero" id="home">
+      <article class="hero-card">
+        <p class="eyebrow">✨ مصمم ومطور واجهات رقمية</p>
+        <h1>مرحباً، أنا <span>MAROUNE</span></h1>
+        <p class="subtitle">أصمم مواقع عصرية سريعة وجذابة تساعدك على إبراز علامتك.</p>
+        <p class="profile-desc">
+          أحوّل الأفكار إلى تجارب رقمية متكاملة، من اختيار الألوان والخطوط إلى بناء واجهات واضحة وسهلة الاستخدام.
+          هدفي هو تصميم موقع احترافي يمنح زوارك انطباعًا قويًا من أول ثانية.
+        </p>
 
-      <p class="profile-desc">
-        Hi, I’m MAROUNE.<br />
-        I turn ideas into engaging digital experiences. Through thoughtful design and clean interfaces, I create websites that feel simple, look powerful, and connect brands with people in a meaningful way.
-      </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Hire me</a>
+          <a href="#services" class="btn btn-secondary">اكتشف خدماتي</a>
+        </div>
 
-      <!-- الدوائر بأيقونات الشبكات -->
-      <div class="social-circle-container">
-        <a href="https://www.tiktok.com/@marwanskafandry?is_from_webapp=1&sender_device=pc" target="_blank" class="social-circle-link" aria-label="TikTok">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor">
-            <path
-              d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z" />
-          </svg>
-        </a>
-        <a href="https://www.facebook.com/share/16rz4RWr9Q/" target="_blank" class="social-circle-link" aria-label="Facebook">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path
-              d="M22.675 0h-21.35C.595 0 0 .595 0 1.326v21.348C0 23.405.595 24 1.326 24h11.49v-9.294H9.691v-3.622h3.124V8.413c0-3.1 1.894-4.788 4.66-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.326-.595 1.326-1.326V1.326C24 .595 23.405 0 22.675 0z" />
-          </svg>
-        </a>
-        <a href="https://wa.me/qr/2APFYEKXX5VOC1" target="_blank" class="social-circle-link" aria-label="WhatsApp">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-          </svg>
-        </a>
-        <a href="https://www.youtube.com/@marounebelloqid" target="_blank" class="social-circle-link" aria-label="YouTube">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path
-              d="M23.5 6.5c-.42-3.01-1.7-4.47-3-5.08-1.29-.61-3.36-1.14-5.92-1.14-2.56 0-4.63.53-5.92 1.14-1.3.61-2.58 2.07-3 5.08-.42 3.02-.42 5.19-.42 5.19s0 2.17.42 5.19c.42 3.01 1.7 4.47 3 5.08 1.29.61 3.36 1.14 5.92 1.14 2.56 0 4.63-.53 5.92-1.14 1.3-.61 2.58-2.07 3-5.08.42-3.02.42-5.19.42-5.19s0-2.17-.42-5.19zM9.75 15.5V8.5L15 12l-5.25 3.5z" />
-          </svg>
-        </a>
-      </div>
+        <div class="social-circle-container" aria-label="حسابات التواصل">
+          <a href="https://www.tiktok.com/@marwanskafandry?is_from_webapp=1&sender_device=pc" target="_blank" rel="noreferrer" class="social-circle-link" aria-label="TikTok">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/share/16rz4RWr9Q/" target="_blank" rel="noreferrer" class="social-circle-link" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.595 0 0 .595 0 1.326v21.348C0 23.405.595 24 1.326 24h11.49v-9.294H9.691v-3.622h3.124V8.413c0-3.1 1.894-4.788 4.66-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.326-.595 1.326-1.326V1.326C24 .595 23.405 0 22.675 0z"/></svg>
+          </a>
+          <a href="https://wa.me/qr/2APFYEKXX5VOC1" target="_blank" rel="noreferrer" class="social-circle-link" aria-label="WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.84 14.67L2 22l5.52-1.13A10 10 0 1 0 12 2Zm0 18.2a8.23 8.23 0 0 1-4.2-1.15l-.3-.18-3.27.66.69-3.18-.2-.32a8.2 8.2 0 1 1 7.28 4.17Zm4.5-6.15c-.25-.12-1.46-.72-1.69-.8-.22-.08-.38-.12-.55.13-.16.24-.63.8-.78.97-.14.16-.28.19-.53.07-.25-.12-1.04-.38-1.99-1.22-.74-.66-1.25-1.48-1.4-1.72-.14-.24-.01-.37.11-.49.11-.11.25-.28.37-.42.12-.14.16-.24.25-.4.08-.16.04-.3-.02-.42-.07-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.17.86 2.31.98 2.47.12.16 1.68 2.57 4.08 3.6.57.25 1.02.4 1.37.5.58.18 1.12.16 1.54.1.47-.07 1.46-.6 1.67-1.18.2-.58.2-1.08.14-1.18-.05-.1-.21-.16-.45-.28Z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@marounebelloqid" target="_blank" rel="noreferrer" class="social-circle-link" aria-label="YouTube">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.5 6.5c-.42-3.01-1.7-4.47-3-5.08-1.29-.61-3.36-1.14-5.92-1.14-2.56 0-4.63.53-5.92 1.14-1.3.61-2.58 2.07-3 5.08-.42 3.02-.42 5.19-.42 5.19s0 2.17.42 5.19c.42 3.01 1.7 4.47 3 5.08 1.29.61 3.36 1.14 5.92 1.14 2.56 0 4.63-.53 5.92-1.14 1.3-.61 2.58-2.07 3-5.08.42-3.02.42-5.19.42-5.19s0-2.17-.42-5.19zM9.75 15.5V8.5L15 12l-5.25 3.5z"/></svg>
+          </a>
+        </div>
 
-      <a href="#contact" class="hire-btn">Hire me</a>
+        <div class="stats">
+          <div class="stat"><strong>+120</strong><span>مشروع مكتمل</span></div>
+          <div class="stat"><strong>4+ سنوات</strong><span>خبرة عملية</span></div>
+          <div class="stat"><strong>98%</strong><span>رضا العملاء</span></div>
+        </div>
+      </article>
+
+      <aside class="profile">
+        <div class="profile-frame">
+          <div class="profile-inner">
+            <img src="profile.jpg" alt="صورة MAROUNE" loading="lazy" />
+          </div>
+        </div>
+      </aside>
     </section>
 
-    <!-- Profile picture -->
-    <section class="profile">
-      <div class="profile-circle">
-        <div class="circle-bg"></div>
-        <img src="profile.jpg" alt="MAROUNE" loading="lazy" />
-      </div>
+    <section class="grid-sections">
+      <article class="mini-card" id="services">
+        <h3>الخدمات</h3>
+        <p>تصميم UI/UX، صفحات هبوط، وتطوير واجهات متجاوبة بأداء عالٍ وتجربة مستخدم ممتازة.</p>
+      </article>
+      <article class="mini-card" id="skills">
+        <h3>المهارات</h3>
+        <p>HTML, CSS, JavaScript مع اهتمام كبير بالتفاصيل البصرية والحركة الدقيقة.</p>
+      </article>
+      <article class="mini-card" id="education">
+        <h3>التعليم</h3>
+        <p>تعلّم مستمر في التصميم الحديث وتطوير الويب لضمان أفضل معايير الجودة.</p>
+      </article>
+      <article class="mini-card" id="experience">
+        <h3>الخبرات</h3>
+        <p>تنفيذ مشاريع شخصية وتجارية بواجهات جذابة وسهلة الاستخدام.</p>
+      </article>
+      <article class="mini-card" id="contact" style="grid-column: 1 / -1;">
+        <h3>تواصل معي</h3>
+        <p>جاهز للعمل على مشروعك القادم! يمكنك التواصل عبر أيقونات السوشيال بالأعلى.</p>
+      </article>
     </section>
   </main>
 
-  <!-- زر تفعيل الوضع الداكن -->
-  <button class="theme" id="themeToggle" aria-label="Toggle dark mode">☾</button>
+  <button class="theme" id="themeToggle" aria-label="تبديل السمة" type="button">☾</button>
 
   <script>
-    /*----- Mobile menu -----*/
     const toggle = document.getElementById("menuToggle");
     const links = document.getElementById("navLinks");
     toggle.addEventListener("click", () => links.classList.toggle("active"));
-    links.querySelectorAll("a").forEach((a) => (a.onclick = () => links.classList.remove("active")));
+    links.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => links.classList.remove("active"));
+    });
 
-    /*----- Smooth scroll -----*/
     document.querySelectorAll('a[href^="#"]').forEach((a) => {
       a.addEventListener("click", (e) => {
+        const target = document.querySelector(a.getAttribute("href"));
+        if (!target) return;
         e.preventDefault();
-        document.querySelector(a.getAttribute("href")).scrollIntoView({ behavior: "smooth", block: "start" });
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
 
-    /*----- Dark mode -----*/
     const themeBtn = document.getElementById("themeToggle");
-    const setTheme = (t) => {
-      document.documentElement.setAttribute("data-theme", t);
-      themeBtn.textContent = t === "dark" ? "☀" : "☾";
-      localStorage.setItem("theme", t);
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute("data-theme", theme);
+      themeBtn.textContent = theme === "dark" ? "☀" : "☾";
+      localStorage.setItem("theme", theme);
     };
-    const stored = localStorage.getItem("theme");
-    if (stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches))
-      setTheme("dark");
-    else setTheme("light");
 
-    themeBtn.onclick = () =>
+    const stored = localStorage.getItem("theme");
+    if (stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+
+    themeBtn.addEventListener("click", () => {
       setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+    });
+
+    const rippleButtons = document.querySelectorAll(".btn, .theme, .social-circle-link");
+    rippleButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const ripple = document.createElement("span");
+        const diameter = Math.max(button.clientWidth, button.clientHeight);
+        const radius = diameter / 2;
+        const rect = button.getBoundingClientRect();
+
+        ripple.style.width = ripple.style.height = `${diameter}px`;
+        ripple.style.left = `${event.clientX - rect.left - radius}px`;
+        ripple.style.top = `${event.clientY - rect.top - radius}px`;
+        ripple.classList.add("btn-ripple");
+
+        const oldRipple = button.querySelector(".btn-ripple");
+        if (oldRipple) oldRipple.remove();
+        button.appendChild(ripple);
+      });
+    });
   </script>
 </body>
 </html>
-
