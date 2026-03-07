@@ -1,99 +1,533 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مدونة أدوات الذكاء الاصطناعي | دليل عملي للمحترفين</title>
-  <meta name="description" content="مدونة عربية متخصصة في أدوات الذكاء الاصطناعي: ChatGPT وClaude وGemini وMidjourney وCopilot مع شروحات عملية ومقارنات وأفضل الاستخدامات.">
-  <meta name="keywords" content="مدونة ذكاء اصطناعي, أدوات AI, ChatGPT, Claude, Gemini, Midjourney, Copilot, شرح الذكاء الاصطناعي بالعربية">
-  <meta name="author" content="مدونة أدوات الذكاء الاصطناعي">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="مدونة أدوات الذكاء الاصطناعي">
-  <meta property="og:description" content="مقالات عربية تفصيلية عن أفضل أدوات الذكاء الاصطناعي وكيفية استخدامها في العمل والإنتاجية.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="ar_AR">
-  <link rel="canonical" href="https://example.com/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI NBEESH | مدونة الذكاء الاصطناعي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --card: #16161f;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f4f6ff;
+      --muted: #a0a3b8;
+      --primary: #7c3aed;
+      --accent: #06b6d4;
+      --glow: rgba(124, 58, 237, 0.35);
+      --radius: 18px;
+      --max: 1200px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Tajawal", sans-serif;
+      background: radial-gradient(circle at 20% 10%, rgba(124, 58, 237, 0.15), transparent 35%),
+                  radial-gradient(circle at 80% 0%, rgba(6, 182, 212, 0.12), transparent 32%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    .container { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 200;
+      transition: 0.3s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(10, 10, 15, 0.75);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 900;
+      text-decoration: none;
+      color: #fff;
+      letter-spacing: 0.5px;
+      direction: ltr;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.2rem;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.25s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-icons { display: flex; align-items: center; gap: 0.65rem; }
+    .icon-btn {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: #fff;
+      cursor: pointer;
+      font-size: 1.05rem;
+    }
+    .menu-btn { display: none; }
+
+    main { padding-top: 92px; }
+
+    .hero {
+      padding: 4.5rem 0 2.8rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #fff 20%, var(--accent) 50%, var(--primary) 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0 auto 1.6rem;
+      font-size: clamp(1rem, 1.6vw, 1.22rem);
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 0.8rem 1.2rem;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.25s;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #5b21b6);
+      color: #fff;
+      box-shadow: 0 12px 25px rgba(124, 58, 237, 0.35);
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.03);
+      border-color: var(--border);
+      color: #fff;
+    }
+    .btn:hover { transform: translateY(-2px); }
+
+    .stats {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      padding: 1rem;
+    }
+    .stat { text-align: center; }
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      color: var(--accent);
+      font-weight: 900;
+    }
+    .stat span { color: var(--muted); font-size: 0.95rem; }
+
+    .section { padding: 2.8rem 0; }
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.3rem;
+      gap: 1rem;
+    }
+    .section-title h2 { font-size: clamp(1.4rem, 2.4vw, 2rem); }
+    .section-title p { color: var(--muted); }
+
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1.1fr 1.4fr;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .featured-image {
+      border-radius: 14px;
+      min-height: 260px;
+      background: linear-gradient(140deg, rgba(124,58,237,0.55), rgba(6,182,212,0.45));
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+    .tag {
+      display: inline-block;
+      background: rgba(124,58,237,0.16);
+      border: 1px solid rgba(124,58,237,0.4);
+      color: #c8b5ff;
+      border-radius: 999px;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+    .featured-content h3 { font-size: 1.5rem; margin-bottom: 0.55rem; }
+    .featured-content p { color: var(--muted); margin-bottom: 1rem; }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .article-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem;
+      transition: 0.3s;
+    }
+    .article-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 40px var(--glow);
+      border-color: rgba(124,58,237,0.55);
+    }
+    .article-card h3 { margin: 0.7rem 0; font-size: 1.1rem; }
+    .article-card p { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.7rem; }
+    .meta {
+      font-size: 0.86rem;
+      color: #c6cadf;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .category-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 1rem;
+      text-align: center;
+      transition: 0.25s;
+      cursor: pointer;
+    }
+    .category-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(6,182,212,0.6);
+      box-shadow: 0 10px 25px rgba(6,182,212,0.2);
+    }
+    .category-card .emoji { font-size: 1.45rem; display: block; margin-bottom: 0.3rem; }
+    .category-card .count { color: var(--muted); font-size: 0.9rem; }
+
+    .newsletter {
+      background: linear-gradient(130deg, rgba(124,58,237,0.28), rgba(6,182,212,0.2));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .newsletter p { color: #d6daf0; margin: 0.5rem 0 1rem; }
+    .newsletter-form {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .newsletter input {
+      width: min(420px, 100%);
+      background: rgba(0,0,0,0.24);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 0.85rem 0.95rem;
+      color: #fff;
+      outline: none;
+      font-family: inherit;
+    }
+    .success-msg {
+      margin-top: 0.8rem;
+      color: #8ef9b8;
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: 0.35s;
+    }
+    .success-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+      animation: pop 0.4s ease;
+    }
+    @keyframes pop {
+      0% { transform: scale(0.92); }
+      100% { transform: scale(1); }
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 3rem;
+      padding: 2rem 0 1.5rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+    .footer-col h4 { margin-bottom: 0.65rem; }
+    .footer-col a {
+      display: block;
+      text-decoration: none;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .footer-col a:hover { color: #fff; }
+    .copyright {
+      margin-top: 1.2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .featured-card { grid-template-columns: 1fr; }
+      .articles-grid, .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 740px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 78px;
+        inset-inline: 1rem;
+        background: rgba(16,16,24,0.95);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 0.8rem;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .nav-links.show { display: flex; }
+      .menu-btn { display: inline-block; }
+      .articles-grid, .categories-grid, .stats { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html">AI Tools Blog</a>
-      <nav class="main-nav" aria-label="التنقل الرئيسي">
-        <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links">☰</button>
-        <ul id="nav-links">
-          <li><a href="index.html" class="active">الرئيسية</a></li>
-          <li><a href="chatgpt.html">ChatGPT</a></li>
-          <li><a href="claude.html">Claude</a></li>
-          <li><a href="gemini.html">Gemini</a></li>
-          <li><a href="midjourney.html">Midjourney</a></li>
-          <li><a href="copilot.html">Copilot</a></li>
-        </ul>
-      </nav>
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="logo">AI NBEESH</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#">الرئيسية</a></li>
+        <li><a href="#articles">المقالات</a></li>
+        <li><a href="#categories">التصنيفات</a></li>
+        <li><a href="#about">عن الموقع</a></li>
+      </ul>
+      <div class="nav-icons">
+        <button class="icon-btn" aria-label="بحث">🔍</button>
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
+      </div>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="container">
-        <h1>مدونة احترافية لأدوات الذكاء الاصطناعي</h1>
-        <p>اكتشف أفضل الأدوات، تعلّم طرق الاستخدام العملي، وطبّق استراتيجيات حقيقية لرفع إنتاجيتك في العمل، المحتوى، والبرمجة.</p>
+    <section class="hero container reveal">
+      <h1>اكتشف عالم الذكاء الاصطناعي</h1>
+      <p>مدونة عربية تساعدك على فهم أدوات الذكاء الاصطناعي الحديثة وتطبيقها عمليًا في الكتابة، البرمجة، التصميم، وصناعة المحتوى.</p>
+      <div class="hero-actions">
+        <a href="#articles" class="btn btn-primary">ابدأ القراءة</a>
+        <a href="#articles" class="btn btn-secondary">تصفح المقالات</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>50+</strong><span>مقالة</span></div>
+        <div class="stat"><strong>10K+</strong><span>قارئ</span></div>
+        <div class="stat"><strong>20+</strong><span>أداة</span></div>
       </div>
     </section>
 
-    <section class="posts container" aria-label="أحدث المقالات">
-      <article class="post-card">
-        <h2>دليل شامل لاستخدام ChatGPT في العمل اليومي</h2>
-        <p class="post-meta">التاريخ: 06 مارس 2026</p>
-        <p>تعرّف على كيفية كتابة برومبتات فعّالة، إنشاء محتوى احترافي، وإدارة المهام بسرعة باستخدام ChatGPT.</p>
-        <a class="btn" href="chatgpt.html">اقرأ المزيد</a>
+    <section class="section container reveal">
+      <div class="section-title">
+        <h2>المقال المميز</h2>
+        <p>أفضل ما نُشر هذا الأسبوع</p>
+      </div>
+      <article class="featured-card">
+        <div class="featured-image" aria-label="صورة المقال"></div>
+        <div class="featured-content">
+          <span class="tag">أدوات AI</span>
+          <h3>دليل شامل لاستخدام ChatGPT وClaude في إنتاج محتوى احترافي</h3>
+          <p>تعرف على طرق عملية لبناء برومبتات فعالة، تسريع سير العمل، وتحويل الأفكار إلى مقالات ومنشورات جاهزة للنشر بجودة عالية.</p>
+          <a href="#" class="btn btn-primary">اقرأ المزيد</a>
+        </div>
       </article>
+    </section>
 
-      <article class="post-card">
-        <h2>Claude: المساعد الذكي للتحليل العميق والكتابة الدقيقة</h2>
-        <p class="post-meta">التاريخ: 06 مارس 2026</p>
-        <p>مراجعة كاملة لقدرات Claude في معالجة النصوص الطويلة، التحليل المنطقي، وصناعة محتوى عالي الجودة.</p>
-        <a class="btn" href="claude.html">اقرأ المزيد</a>
-      </article>
+    <section class="section container reveal" id="articles">
+      <div class="section-title">
+        <h2>أحدث المقالات</h2>
+        <p>مختارات سريعة من المدونة</p>
+      </div>
+      <div class="articles-grid">
+        <article class="article-card">
+          <span class="tag">ChatGPT</span>
+          <h3>10 برومبتات ترفع جودة الكتابة بالعربية</h3>
+          <p>قائمة مختصرة لبناء نصوص تسويقية وتعليمية باحترافية وسرعة.</p>
+          <div class="meta"><span>مروان بلوقيد</span><span>08 مارس 2025</span><span>6 دقائق</span></div>
+        </article>
+        <article class="article-card">
+          <span class="tag">Claude</span>
+          <h3>تحليل ملفات طويلة بدون ضياع السياق</h3>
+          <p>كيف تستخدم Claude لتلخيص المستندات واستخراج النقاط الحرجة.</p>
+          <div class="meta"><span>مروان بلوقيد</span><span>06 مارس 2025</span><span>7 دقائق</span></div>
+        </article>
+        <article class="article-card">
+          <span class="tag">Gemini</span>
+          <h3>دمج Gemini مع أدوات Google للإنتاجية</h3>
+          <p>اكتشف أفضل سيناريوهات العمل بين Gmail وDocs وSheets.</p>
+          <div class="meta"><span>مروان بلوقيد</span><span>04 مارس 2025</span><span>5 دقائق</span></div>
+        </article>
+        <article class="article-card">
+          <span class="tag">Midjourney</span>
+          <h3>تصميم صور تسويقية جذابة خلال دقائق</h3>
+          <p>خطوات عملية لصياغة برومبتات متوازنة بين الإبداع والدقة.</p>
+          <div class="meta"><span>مروان بلوقيد</span><span>03 مارس 2025</span><span>8 دقائق</span></div>
+        </article>
+        <article class="article-card">
+          <span class="tag">Copilot</span>
+          <h3>تسريع كتابة الكود مع الحفاظ على الجودة</h3>
+          <p>نصائح للمطورين للاستفادة من الاقتراحات الذكية بكفاءة أعلى.</p>
+          <div class="meta"><span>مروان بلوقيد</span><span>02 مارس 2025</span><span>6 دقائق</span></div>
+        </article>
+        <article class="article-card">
+          <span class="tag">Sora</span>
+          <h3>من النص إلى الفيديو: مقدمة عملية لـ Sora</h3>
+          <p>تعلم المبادئ الأساسية لإنتاج فيديوهات قصيرة جذابة بالذكاء الاصطناعي.</p>
+          <div class="meta"><span>مروان بلوقيد</span><span>01 مارس 2025</span><span>9 دقائق</span></div>
+        </article>
+      </div>
+    </section>
 
-      <article class="post-card">
-        <h2>Gemini من Google: كيف تستفيد منه في البحث والإنتاجية</h2>
-        <p class="post-meta">التاريخ: 06 مارس 2026</p>
-        <p>تعرف على نقاط القوة في Gemini، تكامله مع خدمات Google، وأفضل السيناريوهات لاستخدامه بذكاء.</p>
-        <a class="btn" href="gemini.html">اقرأ المزيد</a>
-      </article>
+    <section class="section container reveal" id="categories">
+      <div class="section-title">
+        <h2>التصنيفات</h2>
+        <p>اختر الأداة التي تريد التعمق فيها</p>
+      </div>
+      <div class="categories-grid">
+        <div class="category-card"><span class="emoji">🤖</span><h3>ChatGPT</h3><div class="count">12 مقالة</div></div>
+        <div class="category-card"><span class="emoji">🧠</span><h3>Claude</h3><div class="count">9 مقالات</div></div>
+        <div class="category-card"><span class="emoji">✨</span><h3>Gemini</h3><div class="count">8 مقالات</div></div>
+        <div class="category-card"><span class="emoji">🎨</span><h3>Midjourney</h3><div class="count">11 مقالة</div></div>
+        <div class="category-card"><span class="emoji">💻</span><h3>Copilot</h3><div class="count">7 مقالات</div></div>
+        <div class="category-card"><span class="emoji">🎬</span><h3>Sora</h3><div class="count">6 مقالات</div></div>
+      </div>
+    </section>
 
-      <article class="post-card">
-        <h2>Midjourney: تحويل الأفكار إلى صور احترافية</h2>
-        <p class="post-meta">التاريخ: 06 مارس 2026</p>
-        <p>دليل عملي لإنشاء صور مميزة عبر Midjourney مع نصائح للبرومبتات، الأنماط البصرية، وتحسين النتائج.</p>
-        <a class="btn" href="midjourney.html">اقرأ المزيد</a>
-      </article>
-
-
-      <article class="post-card">
-        <h2>دليل بيع صور AI</h2>
-        <p class="post-meta">التاريخ: 07 مارس 2026</p>
-        <p>دليل عملي لبيع صور الذكاء الاصطناعي مع برومبتات جاهزة وأفكار قابلة للتطبيق.</p>
-        <a class="btn" href="ai-image-selling-guide.html">اقرأ المزيد</a>
-      </article>
-      <article class="post-card">
-        <h2>Copilot للمطورين: تسريع البرمجة دون التضحية بالجودة</h2>
-        <p class="post-meta">التاريخ: 06 مارس 2026</p>
-        <p>تعرف على دور Copilot في كتابة الكود، اقتراح الحلول، تقليل الوقت الضائع، وتحسين دورة التطوير الكاملة.</p>
-        <a class="btn" href="copilot.html">اقرأ المزيد</a>
-      </article>
+    <section class="section container reveal" id="about">
+      <div class="newsletter">
+        <h2>اشترك في النشرة الأسبوعية</h2>
+        <p>احصل على أحدث المقالات والأدوات والنصائح العملية مباشرة إلى بريدك الإلكتروني.</p>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" id="emailInput" placeholder="أدخل بريدك الإلكتروني" required />
+          <button type="submit" class="btn btn-primary">اشترك الآن</button>
+        </form>
+        <div class="success-msg" id="successMsg">✅ تم الاشتراك بنجاح! أهلاً بك في مجتمع AI NBEESH.</div>
+      </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>© <span id="year"></span> مدونة أدوات الذكاء الاصطناعي. جميع الحقوق محفوظة.</p>
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h3 class="logo">AI NBEESH</h3>
+        <p style="color: var(--muted);">منصة عربية يقودها مروان بلوقيد لمشاركة أفضل ممارسات الذكاء الاصطناعي بشكل عملي ومباشر.</p>
+      </div>
+      <div class="footer-col">
+        <h4>المدونة</h4>
+        <a href="#">الرئيسية</a>
+        <a href="#articles">أحدث المقالات</a>
+        <a href="#">الأكثر قراءة</a>
+      </div>
+      <div class="footer-col">
+        <h4>التصنيفات</h4>
+        <a href="#categories">ChatGPT</a>
+        <a href="#categories">Midjourney</a>
+        <a href="#categories">Sora</a>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل معنا</h4>
+        <a href="#">البريد الإلكتروني</a>
+        <a href="#">X / تويتر</a>
+        <a href="#">لينكدإن</a>
+      </div>
     </div>
+    <div class="container copyright">مروان بلوقيد 2025 ©</div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    const navbar = document.getElementById('navbar');
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    const newsletterForm = document.getElementById('newsletterForm');
+    const successMsg = document.getElementById('successMsg');
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 8);
+    });
+
+    menuBtn?.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      successMsg.classList.remove('show');
+      void successMsg.offsetWidth;
+      successMsg.classList.add('show');
+      newsletterForm.reset();
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script>
 </body>
 </html>
