@@ -1,0 +1,13 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "AI NBEESH - Arabic AI Blog",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Static site - no build needed'",
+    "start": "http-server -p 8080"
+  },
+  "keywords": ["ai", "blog", "chatgpt", "midjourney"],
+  "author": "",
+  "license": "ISC"
+}
