@@ -1,249 +1,611 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>من النص إلى الفيديو مقدمة عملية لـ Sora</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>من النص إلى الفيديو — مقدمة عملية لـ Sora</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
 :root {
-  --gold: #f5c842;
-  --gold-light: #ffe98a;
-  --dark: #0a0a0f;
-  --accent: #ff6b35;
-  --accent2: #a855f7;
-  --text: #e8e8f0;
-  --text-muted: #888899;
-  --card-bg: rgba(255,255,255,0.04);
-  --border: rgba(245,200,66,0.15);
+  --bg: #08090e;
+  --surface: #0f1119;
+  --card: #131620;
+  --border: rgba(255,255,255,0.07);
+  --text: #edeef5;
+  --muted: #7b8099;
+  --soft: #b0b5cc;
+  --blue: #3d6bfa;
+  --blue-light: #7fa3ff;
+  --cyan: #00d4c8;
+  --violet: #9b6dff;
+  --amber: #f5a623;
 }
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 body {
-  font-family: 'Cairo', sans-serif;
-  background: var(--dark);
+  font-family:'IBM Plex Sans Arabic', sans-serif;
+  background: var(--bg);
   color: var(--text);
-  line-height: 1.7;
+  overflow-x: hidden;
+  line-height: 1.6;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(168,85,247,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 90%, rgba(245,200,66,0.07) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
+/* ── SCANLINE EFFECT ── */
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:999;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
 }
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 20px;
-  position: relative;
-  z-index: 1;
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1rem 3rem;
+  background: rgba(8,9,14,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  display:flex; align-items:center; gap:10px;
+  font-weight:700; font-size:0.95rem; letter-spacing:0.5px;
+}
+.nav-logo-icon {
+  width:30px; height:30px; border-radius:8px;
+  background: linear-gradient(135deg, var(--blue), var(--violet));
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.85rem;
+}
+.nav-links { display:flex; gap:2rem; }
+.nav-links a {
+  font-size:0.8rem; color:var(--muted); text-decoration:none;
+  font-family:'Tajawal',sans-serif; transition:color 0.2s;
+  letter-spacing:0.5px;
+}
+.nav-links a:hover { color:var(--text); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display:flex; align-items:center; justify-content:center;
+  padding: 8rem 2rem 4rem;
+  position:relative; overflow:hidden;
+  text-align:center;
 }
 
-/* عنوان رئيسي */
-h1 {
-  font-family: 'Tajawal', sans-serif;
-  font-weight: 900;
-  background: linear-gradient(135deg, #fff 0%, var(--gold) 50%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Animated background */
+.hero-bg { position:absolute; inset:0; z-index:0; }
+.bg-grid {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(61,107,250,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(61,107,250,0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: gridShift 20s linear infinite;
+}
+@keyframes gridShift { from{transform:translateY(0)} to{transform:translateY(80px)} }
+
+.bg-glow-1 {
+  position:absolute; width:600px; height:600px; border-radius:50%;
+  background: radial-gradient(circle, rgba(61,107,250,0.12) 0%, transparent 70%);
+  top:-10%; left:50%; transform:translateX(-50%);
+  animation: glowBreath 6s ease-in-out infinite;
+}
+.bg-glow-2 {
+  position:absolute; width:400px; height:400px; border-radius:50%;
+  background: radial-gradient(circle, rgba(155,109,255,0.1) 0%, transparent 70%);
+  bottom:10%; right:10%;
+  animation: glowBreath 6s 2s ease-in-out infinite;
+}
+@keyframes glowBreath { 0%,100%{opacity:0.6;transform:scale(1) translateX(-50%)} 50%{opacity:1;transform:scale(1.1) translateX(-50%)} }
+.bg-glow-2 { animation: glowBreath2 6s 2s ease-in-out infinite; }
+@keyframes glowBreath2 { 0%,100%{opacity:0.6;transform:scale(1)} 50%{opacity:1;transform:scale(1.15)} }
+
+/* Floating film frames */
+.film-frames { position:absolute; inset:0; pointer-events:none; }
+.ff {
+  position:absolute; border:1px solid rgba(61,107,250,0.15);
+  border-radius:6px; background:rgba(61,107,250,0.03);
+  animation: ffFloat linear infinite;
+}
+.ff1 { width:120px;height:68px; top:15%;right:8%; animation-duration:8s; animation-delay:0s; }
+.ff2 { width:90px;height:51px; top:60%;left:5%; animation-duration:10s; animation-delay:-3s; }
+.ff3 { width:70px;height:40px; bottom:20%;right:15%; animation-duration:7s; animation-delay:-5s; }
+.ff4 { width:100px;height:56px; top:30%;left:8%; animation-duration:9s; animation-delay:-1.5s; }
+@keyframes ffFloat {
+  0%   { transform:translateY(0) rotate(0deg); opacity:0.4; }
+  50%  { transform:translateY(-20px) rotate(2deg); opacity:0.7; }
+  100% { transform:translateY(0) rotate(0deg); opacity:0.4; }
 }
 
-/* بطاقة */
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 22px;
-  transition: all 0.3s;
-}
+.hero-content { position:relative; z-index:2; max-width:750px; }
 
-.card:hover {
-  border-color: rgba(245,200,66,0.4);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(245,200,66,0.08);
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:6px 16px; border-radius:50px;
+  border:1px solid rgba(61,107,250,0.3);
+  background:rgba(61,107,250,0.08);
+  font-size:0.75rem; color:var(--blue-light); letter-spacing:2px;
+  text-transform:uppercase; font-family:'Tajawal',sans-serif;
+  margin-bottom:2rem;
+  animation: fadeUp 0.6s ease both;
 }
+.eyebrow-pulse { width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,212,200,0.5)} 50%{opacity:0.7;box-shadow:0 0 0 6px transparent} }
 
-/* شبكة بطاقات */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-}
-
-/* شارة */
-.badge {
-  display: inline-block;
-  border-radius: 50px;
-  padding: 3px 12px;
-  font-size: 11px;
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
   font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.h1-line2 { display:block; }
+.gradient-text {
+  background: linear-gradient(90deg, var(--blue-light), var(--cyan), var(--violet));
+  background-size:200%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  animation: gradShift 4s linear infinite;
+}
+@keyframes gradShift { 0%{background-position:0%} 100%{background-position:200%} }
+
+.hero-sub {
+  font-family:'Tajawal',sans-serif; font-weight:300;
+  font-size:1.1rem; color:var(--soft); line-height:1.9;
+  max-width:560px; margin:0 auto 2.5rem;
+  animation: fadeUp 0.7s 0.2s ease both;
 }
 
-.badge-gold {
-  background: rgba(245,200,66,0.15);
-  color: var(--gold);
-  border: 1px solid rgba(245,200,66,0.3);
+.hero-btns {
+  display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;
+  animation: fadeUp 0.7s 0.3s ease both;
+}
+.btn-main {
+  padding:13px 30px; background:var(--blue); color:#fff;
+  border-radius:8px; font-weight:600; font-size:0.9rem;
+  text-decoration:none; transition:all 0.2s;
+  box-shadow:0 0 30px rgba(61,107,250,0.3);
+  font-family:'IBM Plex Sans Arabic',sans-serif;
+}
+.btn-main:hover { background:#5580ff; box-shadow:0 0 40px rgba(61,107,250,0.5); transform:translateY(-2px); }
+.btn-outline {
+  padding:13px 30px; border:1px solid var(--border); color:var(--soft);
+  border-radius:8px; font-size:0.9rem; text-decoration:none;
+  transition:all 0.2s; font-family:'Tajawal',sans-serif;
+}
+.btn-outline:hover { border-color:rgba(255,255,255,0.2); color:var(--text); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── VIDEO FLOW DIAGRAM ── */
+.flow-section { padding:6rem 2rem; max-width:1000px; margin:0 auto; }
+.section-label {
+  font-size:0.72rem; letter-spacing:3px; text-transform:uppercase;
+  color:var(--cyan); font-family:'Tajawal',sans-serif; margin-bottom:1rem;
+}
+.section-h2 { font-size:clamp(1.7rem,3.5vw,2.5rem); font-weight:700; margin-bottom:0.8rem; }
+.section-p { color:var(--muted); font-family:'Tajawal',sans-serif; font-size:1rem; line-height:1.9; max-width:580px; }
+
+.flow-diagram {
+  display:flex; align-items:center; justify-content:center;
+  gap:0; margin-top:3.5rem; flex-wrap:wrap; row-gap:1rem;
+}
+.flow-node {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:14px; padding:1.2rem 1.4rem;
+  text-align:center; width:140px; position:relative;
+  transition:border-color 0.2s, transform 0.2s;
+}
+.flow-node:hover { border-color:rgba(61,107,250,0.4); transform:translateY(-4px); }
+.flow-node-icon { font-size:1.8rem; margin-bottom:0.5rem; }
+.flow-node-title { font-size:0.8rem; font-weight:600; margin-bottom:0.2rem; }
+.flow-node-sub { font-size:0.68rem; color:var(--muted); font-family:'Tajawal',sans-serif; }
+.flow-arrow {
+  color:var(--blue); font-size:1.2rem; padding:0 0.5rem;
+  opacity:0.6;
+}
+.flow-node.active { border-color:var(--blue); background:rgba(61,107,250,0.08); }
+.flow-node.active .flow-node-title { color:var(--blue-light); }
+
+/* ── PRINCIPLES GRID ── */
+.principles { padding:0 2rem 6rem; max-width:1000px; margin:0 auto; }
+.principles-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; margin-top:3rem; }
+@media(max-width:640px){ .principles-grid{grid-template-columns:1fr;} }
+
+.principle-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:1.8rem;
+  position:relative; overflow:hidden;
+  transition:transform 0.25s, border-color 0.25s;
+}
+.principle-card::after {
+  content:''; position:absolute; top:0; right:0;
+  width:100px; height:100px; border-radius:50%;
+  filter:blur(40px); opacity:0; transition:opacity 0.3s;
+}
+.principle-card:hover { transform:translateY(-5px); }
+.principle-card:hover::after { opacity:0.3; }
+.pc-1::after { background:var(--blue); }
+.pc-2::after { background:var(--violet); }
+.pc-3::after { background:var(--cyan); }
+.pc-4::after { background:var(--amber); }
+
+.pc-num {
+  font-size:3rem; font-weight:700; opacity:0.07;
+  position:absolute; top:0.5rem; left:1.2rem;
+  line-height:1; font-family:'IBM Plex Sans Arabic',sans-serif;
+}
+.pc-header { display:flex; align-items:center; gap:12px; margin-bottom:1rem; }
+.pc-icon {
+  width:42px; height:42px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+  border:1px solid var(--border);
+}
+.pc-1 .pc-icon { background:rgba(61,107,250,0.12); }
+.pc-2 .pc-icon { background:rgba(155,109,255,0.12); }
+.pc-3 .pc-icon { background:rgba(0,212,200,0.1); }
+.pc-4 .pc-icon { background:rgba(245,166,35,0.1); }
+.pc-title { font-size:1rem; font-weight:600; }
+.pc-p { color:var(--muted); font-family:'Tajawal',sans-serif; font-size:0.88rem; line-height:1.8; }
+
+/* ── PROMPT BUILDER ── */
+.builder-section { padding:0 2rem 6rem; max-width:1000px; margin:0 auto; }
+
+.builder-box {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:20px; overflow:hidden; margin-top:3rem;
+}
+.builder-header {
+  padding:1rem 1.5rem; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:10px;
+  background:rgba(61,107,250,0.05);
+}
+.builder-dots { display:flex; gap:6px; }
+.bd { width:10px;height:10px;border-radius:50%; }
+.bd1{background:#ff5f56} .bd2{background:#febc2e} .bd3{background:#28c840}
+.builder-title { font-size:0.8rem; color:var(--muted); font-family:'Tajawal',sans-serif; margin-right:auto; }
+
+.builder-body { padding:2rem; }
+.builder-formula {
+  display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center; margin-bottom:2rem;
+}
+.bf-tag {
+  padding:6px 14px; border-radius:6px; font-size:0.8rem; font-weight:600;
+  border:1px solid;
+}
+.bf-scene   { background:rgba(61,107,250,0.1);  border-color:rgba(61,107,250,0.3);  color:var(--blue-light); }
+.bf-motion  { background:rgba(155,109,255,0.1); border-color:rgba(155,109,255,0.3); color:#c4aaff; }
+.bf-camera  { background:rgba(0,212,200,0.08);  border-color:rgba(0,212,200,0.25);  color:var(--cyan); }
+.bf-mood    { background:rgba(245,166,35,0.08); border-color:rgba(245,166,35,0.25); color:var(--amber); }
+.bf-quality { background:rgba(255,255,255,0.05);border-color:var(--border);         color:var(--soft); }
+.bf-plus    { color:var(--muted); font-size:1rem; }
+
+.examples-list { display:flex; flex-direction:column; gap:1rem; }
+.ex-item {
+  border:1px solid var(--border); border-radius:10px; overflow:hidden;
+}
+.ex-meta {
+  padding:0.7rem 1.2rem; display:flex; align-items:center; gap:8px;
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,0.02);
+}
+.ex-dot { width:8px;height:8px;border-radius:50%; }
+.ex-label { font-size:0.72rem; color:var(--muted); font-family:'Tajawal',sans-serif; }
+.ex-prompt {
+  padding:1rem 1.2rem;
+  font-size:0.82rem; color:var(--soft); font-family:'Tajawal',sans-serif;
+  line-height:1.7; direction:ltr; text-align:left;
 }
 
-.badge-green {
-  background: rgba(34,197,94,0.15);
-  color: #4ade80;
-  border: 1px solid rgba(34,197,94,0.3);
-}
+/* ── TIPS ── */
+.tips-section { padding:0 2rem 6rem; max-width:1000px; margin:0 auto; }
+.tips-cols { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:3rem; }
+@media(max-width:640px){.tips-cols{grid-template-columns:1fr;}}
 
-.badge-purple {
-  background: rgba(168,85,247,0.15);
-  color: #c084fc;
-  border: 1px solid rgba(168,85,247,0.3);
+.tip-group { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.5rem; }
+.tip-group-title {
+  font-size:0.75rem; letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:1.2rem; padding-bottom:0.8rem; border-bottom:1px solid var(--border);
+  font-family:'Tajawal',sans-serif;
 }
+.tg-do .tip-group-title { color:var(--cyan); }
+.tg-dont .tip-group-title { color:#ff7070; }
+.tip-item { display:flex; align-items:flex-start; gap:10px; margin-bottom:0.9rem; }
+.tip-item:last-child { margin-bottom:0; }
+.tip-icon { font-size:0.9rem; flex-shrink:0; margin-top:2px; }
+.tip-text { font-size:0.85rem; color:var(--soft); font-family:'Tajawal',sans-serif; font-weight:300; line-height:1.7; }
 
-.badge-red {
-  background: rgba(255,107,53,0.15);
-  color: var(--accent);
-  border: 1px solid rgba(255,107,53,0.3);
+/* ── USE CASES ── */
+.cases-section { padding:0 2rem 6rem; max-width:1000px; margin:0 auto; }
+.cases-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:3rem; }
+@media(max-width:640px){.cases-grid{grid-template-columns:1fr;}}
+.case-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:12px; padding:1.4rem;
+  transition:transform 0.2s, border-color 0.2s;
 }
+.case-card:hover { transform:translateY(-4px); border-color:rgba(255,255,255,0.12); }
+.case-emoji { font-size:1.6rem; margin-bottom:0.8rem; }
+.case-title { font-size:0.95rem; font-weight:600; margin-bottom:0.4rem; }
+.case-desc { font-size:0.82rem; color:var(--muted); font-family:'Tajawal',sans-serif; font-weight:300; line-height:1.7; }
 
-/* فاصل */
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 40px 0;
+/* ── FOOTER ── */
+footer {
+  border-top:1px solid var(--border);
+  padding:2.5rem; text-align:center;
+  color:var(--muted); font-size:0.82rem; font-family:'Tajawal',sans-serif;
 }
+footer .f-logo { font-size:1rem; font-weight:700; color:var(--text); margin-bottom:0.5rem; }
 
-/* أيقونة قسم */
-.icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
+/* ── REVEAL ── */
+.reveal { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease,transform 0.65s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
 
-.icon-gold {
-  background: rgba(245,200,66,0.15);
-  border: 1px solid rgba(245,200,66,0.3);
+@media(max-width:768px){
+  nav { padding:1rem 1.5rem; }
+  .nav-links { display:none; }
+  .hero { padding:7rem 1.5rem 3rem; }
+  .flow-section,.principles,.builder-section,.tips-section,.cases-section { padding-right:1.5rem; padding-left:1.5rem; }
+  .flow-arrow { display:none; }
+  .flow-diagram { justify-content:flex-start; }
 }
-
-.icon-purple {
-  background: rgba(168,85,247,0.15);
-  border: 1px solid rgba(168,85,247,0.3);
-}
-
-.icon-orange {
-  background: rgba(255,107,53,0.15);
-  border: 1px solid rgba(255,107,53,0.3);
-}
-
-/* نص ثانوي */
-.muted {
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-/* أنيميشن */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade {
-  animation: fadeInUp 0.5s ease both;
-}
-  </style>
+</style>
 </head>
 <body>
-  <main class="container">
-    <section class="hero fade">
-      <span class="hero-badge">دليل عملي متقدم</span>
-      <h1>من النص إلى الفيديو مقدمة عملية لـ Sora</h1>
-      <p class="muted">دليل شامل يشرح منهجًا عمليًا لتطبيق موضوع: من النص إلى الفيديو مقدمة عملية لـ Sora بطريقة واضحة قابلة للتنفيذ في الواقع.</p>
-    </section>
 
-    <div class="divider"></div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">▶</div>
+    <span>Sora Guide</span>
+  </div>
+  <div class="nav-links">
+    <a href="#flow">كيف يعمل</a>
+    <a href="#principles">المبادئ</a>
+    <a href="#builder">بناء البرومبت</a>
+    <a href="#cases">الاستخدامات</a>
+  </div>
+</nav>
 
-    <section class="fade">
-      <div class="card">
-        <p>يمثل موضوع «من النص إلى الفيديو مقدمة عملية لـ Sora» فرصة حقيقية لكل شخص يريد الانتقال من الاستهلاك إلى الإنتاج. الفكرة الجوهرية هنا أن النتائج القوية لا تأتي من معرفة سطحية أو خطوات عشوائية، بل من فهم عميق للأساسيات، ثم تطبيق منظم ومستمر. عندما تنظر إلى هذا المجال بعقلية مشروع طويل المدى، ستكتشف أن التحسن يتراكم بمرور الوقت، وأن كل تجربة تمنحك خبرة عملية تقرّبك من مستوى أعلى في الجودة والتأثير.</p>
-        <p>الخطأ الشائع أن يبدأ الناس بحماس كبير ثم يتوقفون عند أول تحدٍ. في الحقيقة، أي مسار مرتبط بـ «من النص إلى الفيديو مقدمة عملية لـ Sora» يمر بمراحل تعلم طبيعية: مرحلة الاكتشاف، ثم التجربة، ثم بناء أسلوب خاص. المهم هو أن تحوّل الهدف الكبير إلى خطوات صغيرة يمكن قياسها. بهذه الطريقة لن تبقى الفكرة مجرد نية، بل تتحول إلى تقدم ملموس يظهر في جودة العمل، وسرعة الإنجاز، وثقة أكبر عند اتخاذ القرار.</p>
-        <p>لكي تستفيد بشكل فعلي، تحتاج إلى مزيج من ثلاثة عناصر: المعرفة الصحيحة، والأدوات المناسبة، والانضباط في التنفيذ. المعرفة تساعدك على اختيار الاتجاه، والأدوات تختصر الوقت، والانضباط يحافظ على الاستمرارية. وعند الجمع بين هذه العناصر ضمن خطة واضحة، يصبح موضوع «من النص إلى الفيديو مقدمة عملية لـ Sora» مسارًا عمليًا يفتح أمامك فرصًا مهنية وإبداعية أكبر بكثير مما تتوقع.</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="bg-grid"></div>
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="film-frames">
+      <div class="ff ff1"></div>
+      <div class="ff ff2"></div>
+      <div class="ff ff3"></div>
+      <div class="ff ff4"></div>
+    </div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="eyebrow-pulse"></span> OpenAI Sora — دليل تعليمي</div>
+    <h1>من النص<br><span class="h1-line2"><span class="gradient-text">إلى الفيديو</span></span></h1>
+    <p class="hero-sub">مقدمة عملية لـ Sora — تعلم المبادئ الأساسية لإنتاج فيديوهات قصيرة جذابة بالذكاء الاصطناعي خلال دقائق.</p>
+    <div class="hero-btns">
+      <a class="btn-main" href="#principles">ابدأ التعلم ↓</a>
+      <a class="btn-outline" href="#builder">← أمثلة برومبتات</a>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section class="flow-section reveal" id="flow">
+  <p class="section-label">كيف يعمل Sora</p>
+  <h2 class="section-h2">من الكلمات إلى المشهد المتحرك</h2>
+  <p class="section-p">Sora نموذج ذكاء اصطناعي من OpenAI يحوّل وصفاً نصياً إلى مقطع فيديو واقعي — في خطوات بسيطة.</p>
+
+  <div class="flow-diagram">
+    <div class="flow-node">
+      <div class="flow-node-icon">✍️</div>
+      <div class="flow-node-title">النص</div>
+      <div class="flow-node-sub">وصف المشهد</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-node active">
+      <div class="flow-node-icon">🧠</div>
+      <div class="flow-node-title">Sora</div>
+      <div class="flow-node-sub">معالجة AI</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-node">
+      <div class="flow-node-icon">🎞️</div>
+      <div class="flow-node-title">الإطارات</div>
+      <div class="flow-node-sub">توليد الصور</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-node">
+      <div class="flow-node-icon">🎬</div>
+      <div class="flow-node-title">الفيديو</div>
+      <div class="flow-node-sub">حتى 60 ثانية</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-node">
+      <div class="flow-node-icon">✅</div>
+      <div class="flow-node-title">النتيجة</div>
+      <div class="flow-node-sub">HD جاهز للنشر</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="principles reveal" id="principles">
+  <p class="section-label">المبادئ الأساسية</p>
+  <h2 class="section-h2">أربع ركائز لفيديو ناجح</h2>
+  <p class="section-p">قبل كتابة أي برومبت، افهم هذه المبادئ — فهي الفرق بين فيديو عادي وفيديو احترافي.</p>
+
+  <div class="principles-grid">
+    <div class="principle-card pc-1">
+      <div class="pc-num">01</div>
+      <div class="pc-header">
+        <div class="pc-icon">🎯</div>
+        <div class="pc-title">وضوح المشهد</div>
       </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <section class="fade">
-      <div class="section-title"><div class="icon icon-gold">✦</div><h2>بناء الأساس الصحيح</h2></div>
-      <p>الأساس الأول في «من النص إلى الفيديو مقدمة عملية لـ Sora» هو وضوح الهدف قبل أي خطوة تنفيذية. كثيرون يبدأون العمل دون تعريف دقيق لما يريدون الوصول إليه، فيتشتت الجهد بين مهام كثيرة لا تقود إلى نتيجة. لذلك من الضروري أن تحدد مخرجًا واضحًا: ما الذي تريد تحقيقه خلال شهر؟ ما المؤشر الذي يثبت أنك تتقدم؟ عندما تصبح الإجابة محددة، يصبح اختيار الأدوات والخطوات أسهل وأكثر منطقية.</p>
-      <p>بعد تحديد الهدف، ابدأ ببناء خطة أسبوعية مرنة تتضمن مهامًا قصيرة بوقت محدد. لا تجعل الخطة مثالية أكثر من اللازم، لأن الواقعية أهم من التعقيد. يكفي أن تلتزم بنمط ثابت من التعلم والتطبيق والمراجعة. هذا الإيقاع البسيط يمنع الانقطاع، ويخلق تراكمًا معرفيًا يجعل تنفيذ «من النص إلى الفيديو مقدمة عملية لـ Sora» أكثر احترافية مع كل دورة عمل جديدة.</p>
-    </section>
-
-    <div class="divider"></div>
-
-    <section class="fade">
-      <div class="section-title"><div class="icon icon-purple">◆</div><h2>رفع الجودة وتحسين المخرجات</h2></div>
-      <p>الجانب الثاني يتعلق بالجودة. أي عمل ضمن «من النص إلى الفيديو مقدمة عملية لـ Sora» يحتاج معايير واضحة حتى لا تعتمد على التقدير العشوائي. ضع قائمة تحقق قبل اعتماد أي نتيجة: هل الفكرة واضحة؟ هل اللغة مناسبة للجمهور؟ هل التنفيذ يخدم الهدف الفعلي؟ وجود هذه المعايير يمنحك قدرة أعلى على تقييم المخرجات بموضوعية، ويقلل الأخطاء المتكررة التي تستهلك الوقت لاحقًا.</p>
-      <p>ومن المفيد أيضًا إنشاء نظام مراجعة مرحلي بدل انتظار النسخة النهائية. راجع العمل على دفعات صغيرة، ودوّن الملاحظات فورًا، ثم حسّن النسخة التالية بناءً على ملاحظات واقعية. هذه الطريقة ترفع الجودة بسرعة لأنها تعتمد على التغذية الراجعة المستمرة. ومع مرور الوقت ستلاحظ أن قراراتك أصبحت أدق، وأن مستوى الإنجاز في «من النص إلى الفيديو مقدمة عملية لـ Sora» صار أكثر ثباتًا ونضجًا.</p>
-    </section>
-
-    <div class="divider"></div>
-
-    <section class="fade">
-      <div class="section-title"><div class="icon icon-orange">◉</div><h2>الاستمرارية والتوسع الذكي</h2></div>
-      <p>أما الجانب الثالث فهو الاستدامة والتوسع. النجاح الحقيقي لا يقاس بنتيجة جيدة واحدة، بل بقدرتك على تكرار النجاح في ظروف مختلفة. لذلك احرص على توثيق ما ينجح معك: الأساليب الفعالة، الأخطاء التي يجب تجنبها، والخطوات التي اختصرت عليك الوقت. هذا التوثيق يتحول لاحقًا إلى دليل تشغيل شخصي يرفع سرعتك في أي مشروع جديد.</p>
-      <p>عند الوصول إلى مستوى ثابت، ابدأ بالتطوير التدريجي: جرّب أدوات إضافية، وسّع نطاق التطبيق، أو شارك النتائج مع جمهور أوسع للحصول على ملاحظات أعمق. التوسع الذكي يعني أن تحافظ على الجودة الأساسية بينما تزيد الأثر. وبهذه العقلية يصبح «من النص إلى الفيديو مقدمة عملية لـ Sora» ليس مجرد تجربة مؤقتة، بل مهارة عملية طويلة المدى تعود عليك بقيمة مستمرة.</p>
-    </section>
-
-    <div class="divider"></div>
-
-    <section class="fade">
-      <h2>نقاط أساسية</h2>
-      <div class="grid">
-        <div class="card"><span class="badge badge-gold">وضوح الهدف</span><p><strong>وضوح الهدف</strong></p><p>تحديد نتيجة قابلة للقياس يمنع التشتت ويجعل كل خطوة ضمن مسار واضح.</p></div>
-        <div class="card"><span class="badge badge-green">تحسين مستمر</span><p><strong>تحسين مستمر</strong></p><p>المراجعة المرحلية تقلل الأخطاء وتسرّع الوصول إلى مستوى احترافي ثابت.</p></div>
-        <div class="card"><span class="badge badge-purple">توثيق المعرفة</span><p><strong>توثيق المعرفة</strong></p><p>تسجيل ما نجح وما فشل يحول الخبرة اليومية إلى نظام عمل قابل للتكرار.</p></div>
+      <p class="pc-p">صف المشهد بدقة: ماذا يحدث؟ أين؟ متى؟ من؟ كلما كان الوصف أوضح، كان الفيديو أقرب لما تتخيله. تجنّب الغموض والأوصاف المبهمة التي تُضيّع الأداة.</p>
+    </div>
+    <div class="principle-card pc-2">
+      <div class="pc-num">02</div>
+      <div class="pc-header">
+        <div class="pc-icon">🎥</div>
+        <div class="pc-title">حركة الكاميرا</div>
       </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <section class="fade">
-      <h2>خطوات عملية للتنفيذ</h2>
-      <div class="card"><p><span class="muted">1.</span> حدّد هدفًا أسبوعيًا واضحًا مرتبطًا مباشرة بموضوع «من النص إلى الفيديو مقدمة عملية لـ Sora» ويمكن قياسه.</p></div>
-      <div class="card"><p><span class="muted">2.</span> قسّم الهدف إلى مهام يومية قصيرة مع وقت محدد لكل مهمة.</p></div>
-      <div class="card"><p><span class="muted">3.</span> نفّذ ثم راجع المخرجات باستخدام قائمة معايير ثابتة للجودة.</p></div>
-      <div class="card"><p><span class="muted">4.</span> دوّن الدروس المستفادة بعد كل دورة عمل لتحسين القرار التالي.</p></div>
-      <div class="card"><p><span class="muted">5.</span> وسّع التطبيق تدريجيًا بعد تحقيق ثبات في النتائج الأساسية.</p></div>
-    </section>
-
-    <div class="divider"></div>
-
-    <section class="fade">
-      <h2>الخاتمة</h2>
-      <div class="card">
-        <p>الخلاصة أن النجاح في «من النص إلى الفيديو مقدمة عملية لـ Sora» يحتاج منهجًا واضحًا أكثر مما يحتاج حماسًا لحظيًا. ابدأ بهدف محدد، اعمل بخطة واقعية، وقيّم النتائج بمعايير ثابتة، ثم حسّن بشكل مستمر. هذه المعادلة البسيطة كافية لصناعة فرق كبير على المدى المتوسط والبعيد.</p>
-        <p>إذا التزمت بالتطبيق المنتظم، ستلاحظ أن التعقيد يقل تدريجيًا، وأن الثقة في قراراتك تزيد مع كل خطوة. ابدأ اليوم بخطوة صغيرة لكن جادة، واجعل التطوير عادة يومية. بهذه الروح ستحول «من النص إلى الفيديو مقدمة عملية لـ Sora» إلى إنجاز ملموس وفرصة حقيقية للنمو الشخصي والمهني.</p>
+      <p class="pc-p">Sora يفهم لغة السينما: pan left، zoom in، tracking shot، aerial view، handheld. تحديد حركة الكاميرا يمنح الفيديو طابعاً سينمائياً حقيقياً بدلاً من مشهد ثابت مملّ.</p>
+    </div>
+    <div class="principle-card pc-3">
+      <div class="pc-num">03</div>
+      <div class="pc-header">
+        <div class="pc-icon">⏱️</div>
+        <div class="pc-title">إيقاع الحركة</div>
       </div>
-    </section>
-  </main>
+      <p class="pc-p">حدد سرعة الحركة: slow motion، time-lapse، smooth transition. الإيقاع البصري هو ما يجعل الفيديو مريحاً للعين أو مثيراً للانتباه — اختر بناءً على الهدف التسويقي.</p>
+    </div>
+    <div class="principle-card pc-4">
+      <div class="pc-num">04</div>
+      <div class="pc-header">
+        <div class="pc-icon">🌅</div>
+        <div class="pc-title">الجو البصري</div>
+      </div>
+      <p class="pc-p">الإضاءة والألوان تصنع الانطباع الأول. golden hour، moody fog، neon-lit night، clean white studio — كل جو يثير مشاعر مختلفة لدى المشاهد. اختر ما يخدم رسالتك.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BUILDER -->
+<section class="builder-section reveal" id="builder">
+  <p class="section-label">بناء البرومبت</p>
+  <h2 class="section-h2">هيكل البرومبت المثالي</h2>
+  <p class="section-p">كل برومبت فيديو ناجح يجمع هذه العناصر معاً — بترتيب واضح ومتسق.</p>
+
+  <div class="builder-box">
+    <div class="builder-header">
+      <div class="builder-dots"><div class="bd bd1"></div><div class="bd bd2"></div><div class="bd bd3"></div></div>
+      <div class="builder-title">Sora Prompt Builder</div>
+    </div>
+    <div class="builder-body">
+      <div class="builder-formula">
+        <span class="bf-tag bf-scene">المشهد والموضوع</span>
+        <span class="bf-plus">+</span>
+        <span class="bf-tag bf-motion">نوع الحركة</span>
+        <span class="bf-plus">+</span>
+        <span class="bf-tag bf-camera">حركة الكاميرا</span>
+        <span class="bf-plus">+</span>
+        <span class="bf-tag bf-mood">الجو والإضاءة</span>
+        <span class="bf-plus">+</span>
+        <span class="bf-tag bf-quality">الجودة والأسلوب</span>
+            </div>
+      <div class="examples-list">
+        <div class="ex-item">
+          <div class="ex-meta">
+            <div class="ex-dot" style="background:var(--blue)"></div>
+            <div class="ex-label">إعلان عطور فاخرة</div>
+          </div>
+          <div class="ex-prompt">
+            A luxury perfume bottle spinning slowly on a dark marble surface, surrounded by golden smoke swirling upward, cinematic tracking shot moving around the bottle, dramatic side lighting with warm amber highlights, ultra-slow motion, 4K photorealistic, luxury brand commercial style
+          </div>
+        </div>
+        <div class="ex-item">
+          <div class="ex-meta">
+            <div class="ex-dot" style="background:var(--violet)"></div>
+            <div class="ex-label">محتوى طبيعة وسفر</div>
+          </div>
+          <div class="ex-prompt">
+            Aerial drone footage flying over a golden desert at sunset, vast sand dunes casting long shadows, small caravan of camels walking in the distance, smooth forward camera movement, warm orange and red tones, cinematic wide angle, 8K ultra-detailed
+          </div>
+        </div>
+        <div class="ex-item">
+          <div class="ex-meta">
+            <div class="ex-dot" style="background:var(--cyan)"></div>
+            <div class="ex-label">إعلان تقني — تطبيق</div>
+          </div>
+          <div class="ex-prompt">
+            Close-up of hands using a sleek smartphone with glowing holographic UI elements floating above the screen, futuristic tech environment, shallow depth of field, cool blue and white color palette, smooth macro zoom-in, modern corporate tech style, 4K
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section class="tips-section reveal">
+  <p class="section-label">نصائح وتحذيرات</p>
+  <h2 class="section-h2">افعل ولا تفعل</h2>
+  <p class="section-p">هذه الفروق الدقيقة تفرّق بين نتيجة مقبولة ونتيجة احترافية.</p>
+
+  <div class="tips-cols">
+    <div class="tip-group tg-do">
+      <div class="tip-group-title">✓ افعل دائماً</div>
+      <div class="tip-item"><span class="tip-icon">✅</span><span class="tip-text">حدد نوع الكاميرا وحركتها بدقة في كل برومبت</span></div>
+      <div class="tip-item"><span class="tip-icon">✅</span><span class="tip-text">اذكر المدة الزمنية للفيديو إن أمكن (5 ثواني، 15 ثانية)</span></div>
+      <div class="tip-item"><span class="tip-icon">✅</span><span class="tip-text">ابدأ بمشهد واحد بسيط قبل الانتقال للمشاهد المركبة</span></div>
+      <div class="tip-item"><span class="tip-icon">✅</span><span class="tip-text">استخدم مصطلحات سينمائية معروفة مثل dolly shot أو panning</span></div>
+      <div class="tip-item"><span class="tip-icon">✅</span><span class="tip-text">حدد نسبة العرض إلى الارتفاع: 16:9 أو 9:16 أو 1:1</span></div>
+    </div>
+    <div class="tip-group tg-dont">
+      <div class="tip-group-title">✗ تجنّب دائماً</div>
+      <div class="tip-item"><span class="tip-icon">❌</span><span class="tip-text">لا تضع شخصيات بشرية متعددة بحركات معقدة في نفس المشهد</span></div>
+      <div class="tip-item"><span class="tip-icon">❌</span><span class="tip-text">تجنب النصوص والكلمات داخل الفيديو — Sora لا يُجيدها بعد</span></div>
+      <div class="tip-item"><span class="tip-icon">❌</span><span class="tip-text">لا تطلب أحداثاً منطقياً معقداً تتطلب تسلسلاً زمنياً دقيقاً</span></div>
+      <div class="tip-item"><span class="tip-icon">❌</span><span class="tip-text">تجنب المشاهد التي تتطلب دقة فيزيائية عالية كالسقوط والتصادم</span></div>
+      <div class="tip-item"><span class="tip-icon">❌</span><span class="tip-text">لا تكتفِ بجملة واحدة — البرومبت القصير ينتج نتائج عشوائية</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="cases-section reveal" id="cases">
+  <p class="section-label">حالات الاستخدام</p>
+  <h2 class="section-h2">أين تستخدم Sora؟</h2>
+  <p class="section-p">من التسويق إلى التعليم — هذه أبرز المجالات التي يمكن لـ Sora أن يحدث فيها فرقاً حقيقياً.</p>
+
+  <div class="cases-grid">
+    <div class="case-card">
+      <div class="case-emoji">📱</div>
+      <div class="case-title">محتوى السوشيال</div>
+      <div class="case-desc">ريلز وستوري وتيك توك — فيديوهات بصرية جذابة دون كاميرا أو طاقم تصوير.</div>
+    </div>
+    <div class="case-card">
+      <div class="case-emoji">🛍️</div>
+      <div class="case-title">إعلانات المنتجات</div>
+      <div class="case-desc">عرض المنتج بزوايا متعددة وإضاءات احترافية بتكلفة أقل من التصوير التقليدي.</div>
+    </div>
+    <div class="case-card">
+      <div class="case-emoji">🏨</div>
+      <div class="case-title">السياحة والضيافة</div>
+      <div class="case-desc">مشاهد سياحية وجولات افتراضية لفنادق ومناطق سياحية دون السفر الفعلي.</div>
+    </div>
+    <div class="case-card">
+      <div class="case-emoji">🎓</div>
+      <div class="case-title">المحتوى التعليمي</div>
+      <div class="case-desc">تحويل الشرح النصي إلى مشاهد توضيحية مرئية تزيد الفهم والتفاعل.</div>
+    </div>
+    <div class="case-card">
+      <div class="case-emoji">🏠</div>
+      <div class="case-title">العقارات</div>
+      <div class="case-desc">جولات افتراضية ومشاهد تُظهر العقار بإضاءات وأوقات مختلفة من اليوم.</div>
+    </div>
+    <div class="case-card">
+      <div class="case-emoji">🎮</div>
+      <div class="case-title">الألعاب والترفيه</div>
+      <div class="case-desc">مقاطع تشويقية وعوالم خيالية وإعلانات مبتكرة بجودة سينمائية.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">▶ Sora — من النص إلى الفيديو</div>
+  <p>للمزيد تفضل بزيارة <strong>openai.com/sora</strong></p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, {threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
