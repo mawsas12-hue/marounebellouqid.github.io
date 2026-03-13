@@ -9,7 +9,8 @@
   <meta property="og:description" content="A colorful studio-style review of top AI image tools with glassmorphism cards and style palettes." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@300;400;600;700;800&display=swap" />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{--p:#7f3bff;--pink:#ff2fa7;--c:#00e9ff;--glass:rgba(255,255,255,.16)}
     *{box-sizing:border-box} html{scroll-behavior:smooth}
@@ -30,9 +31,20 @@
     .result{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
     .shot{padding:10px;border-radius:12px;background:rgba(255,255,255,.13);min-height:110px}
     @media(min-width:720px){.masonry{columns:2}} @media(min-width:1050px){.masonry{columns:3}}
+  
+    html { scroll-behavior: smooth; }
+  
+    .back-to-top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border:none;border-radius:999px;background:#7c3aed;color:#fff;font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:400;box-shadow:0 8px 20px rgba(0,0,0,.25)}.back-to-top.show{display:flex}@media (max-width:640px){.back-to-top{right:12px;bottom:12px;width:40px;height:40px}}
+  
+    .reading-progress{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,#06b6d4,#7c3aed);z-index:500}
   </style>
+  <meta name="keywords" content="best ai image generators 2026 creative studio guide, ai, artificial intelligence, ai tools, chatbot, automation, productivity" />
+  <meta property="og:image" content="https://marounebellouqid.github.io/logo.webp" />
+  <meta property="og:type" content="article" />
+  <link rel="canonical" href="https://marounebellouqid.github.io/pages/best-ai-image-generators-2026.html" />
 </head>
 <body>
+  <div class="reading-progress" id="readingProgress"></div>
 <div class="blob b1"></div><div class="blob b2"></div>
 <main>
   <section class="hero">
@@ -64,5 +76,8 @@ const result=document.getElementById('resultText');
 slider.addEventListener('input',()=>{const v=+slider.value;lvl.textContent=v;
 result.textContent=v<34?'Photoreal heavy output with restrained artistic flair.':v<67?'Balanced composition with realistic lighting and stylized color pops.':'Bold experimental output with surreal palettes and dramatic texture.';});
 </script>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+<script>(function(){const b=document.getElementById("backToTop");if(!b)return;window.addEventListener("scroll",()=>b.classList.toggle("show",window.scrollY>320));b.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));})();</script>
+<script>(function(){const bar=document.getElementById("readingProgress");if(!bar)return;const update=()=>{const h=document.documentElement;const t=h.scrollTop||document.body.scrollTop;const d=(h.scrollHeight-h.clientHeight)||1;bar.style.width=(t/d*100)+"%";};window.addEventListener("scroll",update,{passive:true});update();})();</script>
 </body>
 </html>
