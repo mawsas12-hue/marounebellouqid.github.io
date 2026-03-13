@@ -229,19 +229,93 @@
     .section-title p { color: var(--muted); }
 
     .featured-card {
-      display: grid;
-      grid-template-columns: 1.1fr 1.4fr;
-      gap: 1rem;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1rem;
     }
-    .featured-image {
+    .featured-media {
+      position: relative;
+      overflow: hidden;
       border-radius: 14px;
-      min-height: 260px;
-      background: linear-gradient(140deg, rgba(124,58,237,0.55), rgba(6,182,212,0.45));
+      min-height: 320px;
+      margin-bottom: 1rem;
       border: 1px solid rgba(255,255,255,0.16);
+    }
+    .featured-image {
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      object-fit: cover;
+      display: block;
+      transform: scale(1);
+      transition: transform 0.6s ease;
+    }
+    .featured-media:hover .featured-image {
+      transform: scale(1.08);
+    }
+    .featured-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(130deg, rgba(124,58,237,0.5), rgba(59,130,246,0.45));
+      mix-blend-mode: screen;
+      animation: gradientMove 6s ease-in-out infinite alternate;
+    }
+    .featured-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+    .featured-title-wrap {
+      position: absolute;
+      inset-inline: 1.2rem;
+      bottom: 1.1rem;
+      z-index: 2;
+    }
+    .featured-badge {
+      display: inline-block;
+      margin-bottom: 0.55rem;
+      background: rgba(124,58,237,0.2);
+      color: #ddd6fe;
+      border: 1px solid rgba(167,139,250,0.65);
+      border-radius: 999px;
+      padding: 0.24rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      box-shadow: 0 0 16px rgba(124,58,237,0.6), 0 0 28px rgba(59,130,246,0.35);
+      backdrop-filter: blur(4px);
+    }
+    .featured-overlay-title {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.5vw, 2rem);
+      line-height: 1.25;
+      font-weight: 900;
+      background: linear-gradient(120deg, #c4b5fd, #93c5fd, #e9d5ff);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.45);
+      min-height: 2.6em;
+    }
+    .featured-overlay-title::after {
+      content: "";
+      display: inline-block;
+      width: 2px;
+      height: 0.95em;
+      margin-inline-start: 0.22rem;
+      background: rgba(196,181,253,0.9);
+      animation: caretBlink 0.9s step-end infinite;
+      vertical-align: -0.05em;
+    }
+    @keyframes gradientMove {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(18deg); }
     }
     .tag {
       display: inline-block;
@@ -438,7 +512,6 @@
     }
 
     @media (max-width: 980px) {
-      .featured-card { grid-template-columns: 1fr; }
       .articles-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -505,10 +578,16 @@
         <p>Best pick this week</p>
       </div>
       <article class="featured-card">
-        <img src="https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=800&auto=format&fit=crop&q=80" alt="Article image" class="featured-image" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
+        <div class="featured-media">
+          <img src="https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=800&auto=format&fit=crop&q=80" alt="Article image" class="featured-image">
+          <div class="featured-gradient"></div>
+          <div class="featured-grid"></div>
+          <div class="featured-title-wrap">
+            <span class="featured-badge">AI Tools</span>
+            <h3 class="featured-overlay-title" id="featuredOverlayTitle" data-text="A complete guide to using ChatGPT and Claude for professional content"></h3>
+          </div>
+        </div>
         <div class="featured-content">
-          <span class="tag">AI Tools</span>
-          <h3>A complete guide to using ChatGPT and Claude for professional content</h3>
           <p>Learn practical methods to craft effective prompts, speed up workflow, and turn ideas into publish-ready posts.</p>
           <a href="pages/featured-article.html" class="btn btn-primary">Read More</a>
         </div>
@@ -568,6 +647,128 @@
           <h3>From text to video: a practical Sora intro</h3>
           <p>Learn the basics of producing engaging short videos with AI.</p>
           <div class="meta"><span>Marouane Bellouqid</span><span>March 1, 2025</span><span>9 min</span></div>
+        </article>
+
+        <!-- Best AI Writing Tools 2026 -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/best-ai-writing-tools-2026.html'">
+          <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&auto=format&fit=crop&q=80" alt="Best AI Writing Tools 2026" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Writing</span>
+          <h3>Best AI Writing Tools 2026</h3>
+          <p>Discover the top AI writing assistants that help you create content faster and smarter in 2026.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Best AI Image Generators 2026 -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/best-ai-image-generators-2026.html'">
+          <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&auto=format&fit=crop&q=80" alt="Best AI Image Generators 2026" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Image AI</span>
+          <h3>Best AI Image Generators 2026</h3>
+          <p>A complete roundup of the most powerful AI image generation tools available this year.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Best AI Chatbots 2026 -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/best-ai-chatbots-2026.html'">
+          <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&auto=format&fit=crop&q=80" alt="Best AI Chatbots 2026" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Chatbots</span>
+          <h3>Best AI Chatbots 2026</h3>
+          <p>Compare the leading AI chatbots and find out which one fits your needs best.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Best AI Video Editors 2026 -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/best-ai-video-editors-2026.html'">
+          <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=800&auto=format&fit=crop&q=80" alt="Best AI Video Editors 2026" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Video AI</span>
+          <h3>Best AI Video Editors 2026</h3>
+          <p>Explore AI-powered video editing tools that save time and boost production quality.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Best AI Tools for Students 2026 -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/best-ai-tools-for-students-2026.html'">
+          <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&auto=format&fit=crop&q=80" alt="Best AI Tools for Students 2026" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Education</span>
+          <h3>Best AI Tools for Students 2026</h3>
+          <p>The best AI tools every student should know to study smarter and get better results.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Best AI Tools for Business 2026 -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/best-ai-tools-for-business-2026.html'">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80" alt="Best AI Tools for Business 2026" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Business</span>
+          <h3>Best AI Tools for Business 2026</h3>
+          <p>Explore the most powerful AI tools helping businesses automate tasks and grow faster in 2026.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Best AI Productivity Tools 2026 -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/best-ai-productivity-tools-2026.html'">
+          <img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&auto=format&fit=crop&q=80" alt="Best AI Productivity Tools 2026" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Productivity</span>
+          <h3>Best AI Productivity Tools 2026</h3>
+          <p>Boost your daily output with these top-rated AI productivity tools trusted by professionals.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Best Free AI Tools for Beginners 2026 -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/best-free-ai-tools-for-beginners-2026.html'">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80" alt="Best Free AI Tools for Beginners 2026" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Beginners</span>
+          <h3>Best Free AI Tools for Beginners 2026</h3>
+          <p>Just starting with AI? Here are the best free tools to help you learn and create with ease.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Top 10 Free AI Writing Tools -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/top-10-free-ai-writing-tools.html'">
+          <img src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?w=800&auto=format&fit=crop&q=80" alt="Top 10 Free AI Writing Tools" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Writing</span>
+          <h3>Top 10 Free AI Writing Tools</h3>
+          <p>A curated list of the best free AI writing tools you can start using today, no credit card needed.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Top 10 Free AI Image Tools -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/top-10-free-ai-image-tools.html'">
+          <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&auto=format&fit=crop&q=80" alt="Top 10 Free AI Image Tools" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Image AI</span>
+          <h3>Top 10 Free AI Image Tools</h3>
+          <p>Generate stunning visuals for free using these top AI image tools available in 2026.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+
+        <!-- Top 10 Free AI Chatbots -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/top-10-free-ai-chatbots.html'">
+          <img src="https://images.unsplash.com/photo-1676299081847-5c7b5b3c4e5a?w=800&auto=format&fit=crop&q=80" alt="Top 10 Free AI Chatbots" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Chatbots</span>
+          <h3>Top 10 Free AI Chatbots</h3>
+          <p>The best free AI chatbots you can use right now for work, study, and creativity.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Best Free AI Tools No Signup Required -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/best-free-ai-tools-no-signup.html'">
+          <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=80" alt="Best Free AI Tools No Signup Required" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Free Tools</span>
+          <h3>Best Free AI Tools No Signup Required</h3>
+          <p>Use powerful AI tools instantly without creating an account or entering a credit card.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- Free AI Tools That Replace Paid Software -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/free-ai-tools-replace-paid-software.html'">
+          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&auto=format&fit=crop&q=80" alt="Free AI Tools That Replace Paid Software" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Free Tools</span>
+          <h3>Free AI Tools That Replace Paid Software</h3>
+          <p>Why pay for expensive software when these free AI tools can do the same job better?</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- What Is AI Writing? Complete Guide -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/what-is-ai-writing-complete-guide.html'">
+          <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&auto=format&fit=crop&q=80" alt="What Is AI Writing? Complete Guide" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Guide</span>
+          <h3>What Is AI Writing? Complete Guide</h3>
+          <p>Everything you need to know about AI writing — how it works, best tools, and real use cases.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
+        </article>
+        <!-- What Are AI Image Generators? Complete Guide -->
+        <article class="article-card" style="cursor:pointer" onclick="location.href='pages/what-are-ai-image-generators-complete-guide.html'">
+          <img src="https://images.unsplash.com/photo-1561736778-92e52a7769ef?w=800&auto=format&fit=crop&q=80" alt="What Are AI Image Generators? Complete Guide" style="width:100%; height:140px; border-radius:12px; margin-bottom:12px; object-fit:cover;">
+          <span class="tag">Guide</span>
+          <h3>What Are AI Image Generators? Complete Guide</h3>
+          <p>A beginner-friendly guide to understanding AI image generators and how to get the best results.</p>
+          <div class="meta"><span>Marouane Bellouqid</span><span>March 2026</span><span>8 min</span></div>
         </article>
       </div>
     </section>
@@ -667,6 +868,7 @@
     const newsletterForm = document.getElementById('newsletterForm');
     const successMsg = document.getElementById('successMsg');
     const siteName = document.getElementById('siteName');
+    const featuredOverlayTitle = document.getElementById('featuredOverlayTitle');
     const searchBtn = document.getElementById('searchBtn');
     const popularPrev = document.getElementById('popularPrev');
     const popularNext = document.getElementById('popularNext');
@@ -707,7 +909,23 @@
       }, 120);
     };
 
+    const runFeaturedTitleTyping = () => {
+      if (!featuredOverlayTitle) return;
+      const text = featuredOverlayTitle.dataset.text || '';
+      featuredOverlayTitle.textContent = '';
+      let idx = 0;
+      const typing = setInterval(() => {
+        featuredOverlayTitle.textContent = text.slice(0, idx + 1);
+        idx += 1;
+        if (idx >= text.length) {
+          featuredOverlayTitle.textContent = text;
+          clearInterval(typing);
+        }
+      }, 45);
+    };
+
     runSiteNameTyping();
+    runFeaturedTitleTyping();
 
     newsletterForm.addEventListener('submit', (e) => {
       e.preventDefault();
